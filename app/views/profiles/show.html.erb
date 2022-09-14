@@ -1,0 +1,25 @@
+<div>
+  <%= @profile.email %>
+  <hr>
+  <p>Courses enrolled in:<% @profile.courses.each do |c|%>
+  <hr>
+      <%=link_to  c.name ,course_path(c.id)%>,
+     Joined on <%= c.created_at.strftime("%b %d") %>
+     <%# binding.pry %>
+      <hr>
+    <% end %></p>
+</div>
+<%# [#<UserCourse:0x000000010b1d1a08
+  id: 1,
+  user_id: 2,
+  course_id: 1,
+  status: "inprogress",
+  created_at: Wed, 14 Sep 2022 11:03:21.866269000 UTC +00:00,
+  updated_at: Wed, 14 Sep 2022 11:03:21.866269000 UTC +00:00>,
+ #<UserCourse:0x000000010b1d1878
+  id: 2,
+  user_id: 2,
+  course_id: 4,
+  status: "inprogress",
+  created_at: Wed, 14 Sep 2022 11:04:16.876393000 UTC +00:00,
+  updated_at: Wed, 14 Sep 2022 11:04:16.876393000 UTC +00:00>] %>
