@@ -1,7 +1,7 @@
 <h1>Enter Course Details</h1>
 <br>
-<%= form_with url: courses_path, method: :post do |f| %>
- <div class="mb-3">
+<%= form_with  model: @course, url: { action: "create",controller: "courses" },method: :post do |f| %>
+  <div class="mb-3">
     <%= f.label :name, "Course name" %>
     <%= f.text_field :name ,placeholder: "Enter Your course name"%>
   </div>
