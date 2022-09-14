@@ -1,16 +1,25 @@
-<h1>Course Name is <%=@course.name%></h1>
-<h1>Course creator Name is <%=@course.creator%></h1>
-<h1>Your name is <%=link_to current_user.name, profile_path(current_user.id)%> </h1>
+<h1>Course Content </h1>
+<hr>
+<h2>Course Name is <%=@course.name%></h2>
+<h2>Course creator Name is <%=@course.creator%></h2>
+<h2>Course language is <%=@course.language%></h2>
 <hr>
 <br>
-<h1>To enroll</h1>
 <%# binding.pry %>
 <% if current_user.already_enrolled?(@course) %>
-  <h1>Your are enrolled already</h1>
-  <%# <h1>Here is your progress status: <%=current_user.check_progress(@course).status %>
+  <h1>Your are now enrolled in this  <%= link_to @course.name,course_path(@course.id)%> course</h1>
+  <% current_user.user_courses.each do |course| %>
+    <% if current_user.id == course.user_id && @course.id == course.course_id%>
+      <h1>Here is your progress status: <%=course.status %></h1>
+      <%# if course.status == "inprogress" %>
+      <%#else %>
+      <%# end %>
+    <% end %>
+  <% end %>
 <% else %>
   <%= button_to "Click Me(Enroll)",enroll_course_path%>
 <% end %>
+<%= link_to "Back",:back%>
 <%if current_user.role == 'admin'%>
   <%= button_to "delete this course", course_path(@course), method: :delete%>
 <% end %>

@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     end
   end
   resources :profiles
-  root 'courses#index'
+  root 'profiles#show'
   # Defines the root path route ("/")
   # root "articles#index"
 end

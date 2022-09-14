@@ -1,13 +1,18 @@
 <div>
-  <%= @profile.email %>
+  <p> Your email is  <%= @profile.email %></p>
+    <%= link_to "sign out", destroy_user_session_path, method: :delete %>
+  <p><%= link_to 'Available Courses', courses_path%></p>
   <hr>
-  <p>Courses enrolled in:<% @profile.courses.each do |c|%>
-  <hr>
-      <%=link_to  c.name ,course_path(c.id)%>,
-     Joined on <%= c.created_at.strftime("%b %d") %>
-     <%# binding.pry %>
-      <hr>
-    <% end %></p>
+  <% if @profile.courses.empty? %>
+    <p>No enrolled course yet</p>
+  <% else %>
+    <p>Courses, your are enrolled in:<% @profile.courses.each do |c|%>
+        <hr>
+        <%=link_to  c.name ,course_path(c.id)%>,
+        Joined on <%= c.created_at.strftime("%b %d") %>
+        <hr>
+      <% end %></p>
+  <% end %>
 </div>
 <%# [#<UserCourse:0x000000010b1d1a08
   id: 1,
