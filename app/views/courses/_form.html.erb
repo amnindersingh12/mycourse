@@ -5,6 +5,7 @@
     <%= f.label :name, "Course name" %>
     <%= f.text_field :name ,placeholder: "Enter Your course name"%>
   </div>
+  <%= f.hidden_field :creator_id, value: current_user.id %>
   <div class="mb-3">
     <%= f.label :creator, "Course Creator" %>
     <%= f.text_field :creator ,placeholder: "Enter Your name"%>

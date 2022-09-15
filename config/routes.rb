@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :courses do
     member do
       post :enroll
+      patch :mark_as
     end
   end
   resources :profiles

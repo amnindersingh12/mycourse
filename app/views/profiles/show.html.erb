@@ -1,8 +1,22 @@
 <div>
   <p> Your email is  <%= @profile.email %></p>
-    <%= link_to "sign out", destroy_user_session_path, method: :delete %>
+  <%= link_to "sign out", destroy_user_session_path, method: :delete %>
   <p><%= link_to 'Available Courses', courses_path%></p>
   <hr>
+  <%if current_user.role == 'admin'%>
+    <%= link_to "Add Course", new_course_path %>
+    <br>
+    <h1>Course Created by You</h1>
+    <% @courses.each do |course|%>
+      <% if course.creator_id == current_user.id  %>
+        <p>
+          Name of the course : <%=link_to  display_course(course.id).name, course_path(course.id) %>
+        </p>
+      <% end %>
+    <% end %>
+  <% end %>
+  <hr>
+  <br>
   <% if @profile.courses.empty? %>
     <p>No enrolled course yet</p>
   <% else %>

@@ -13,6 +13,7 @@
 ActiveRecord::Schema[7.0].define(version: 2022_09_14_080559) do
   create_table "courses", force: :cascade do |t|
     t.string "language"
+    t.integer "creator_id"
     t.string "creator"
     t.string "name"
     t.datetime "created_at", null: false

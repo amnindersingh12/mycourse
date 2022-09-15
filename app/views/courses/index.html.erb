@@ -1,10 +1,7 @@
+<p><%= link_to "My profile", root_path%> </p>
 <h1>Welcome to Course</h1>
 <% if current_user %>
   <p>Hello <%=current_user.email %></p>
-  <%if current_user.role == 'admin'%>
-    <%= link_to "Add Course", new_course_path %>
-    <br>
-  <% end %>
   <%= link_to "sign out", destroy_user_session_path, method: :delete %>
 <%else  %>
   <p>You are not signed in </p>
@@ -15,8 +12,8 @@
 <div class="mt-5">
   <h1>list of all the available course</h1>
   <hr>
-  <% @courses.each do |course|%>
-    <p> Name of the course : <%=link_to  course.name, course_path(course.id) %></p>
+  <% @courses.each.with_index(1) do |course,index|%>
+    <p><%=index%>. Name of the course : <%=link_to  course.name, course_path(course.id) %></p>
   <% end %>
 </div>
 <div>

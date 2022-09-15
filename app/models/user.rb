@@ -35,4 +35,13 @@ class User < ApplicationRecord
   def already_enrolled?(course)
     courses.include?(course)
   end
+
+  def mark_as_(id)
+    x = user_courses.where(course_id: id).first
+    if x.status == 'inprogress'
+      x.update(status: :completed)
+    else
+      x.update(status: :inprogress)
+    end
+  end
 end
