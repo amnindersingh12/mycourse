@@ -21,20 +21,12 @@ class CoursesController < ApplicationController
 
   def enroll
     @enrolled = current_user.enroll_in(@course.id)
-    if @enrolled.save
-      redirect_to @course
-    else
-      @enrolled.errors.full_messages
-    end
+    redirect_to @course if @enrolled.save
   end
 
   def create
     @course = current_user.courses.new(course_params)
-    if @course.save
-      redirect_to courses_path
-    else
-      @course.errors.full_messages
-    end
+    redirect_to courses_path if @course.save
   end
 
   def destroy

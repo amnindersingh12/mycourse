@@ -24,14 +24,14 @@
   <% if @profile.courses.empty? %>
     <p>You have not enrolled in course yet</p>
   <% else %>
-    <p>Courses, your are enrolled in:<% @profile.courses.each do |c|%>
+    <h1>Courses,in which you are enrolled :<% @profile.courses.each do |c|%>    </h1>
+
         <hr>
         <p>Course Name => <%=link_to  c.name ,course_path(c.id)%></p>
         <p>  Enrollment date => <%= c.created_at.strftime("%b %d, %Y") %></p>
         <p>Show status => <%= show_status(c) %></p>
         <hr>
       <% end %>
-    </p>
   <% end %>
 </div>
 <%# [#<UserCourse:0x000000010b1d1a08

@@ -21,7 +21,7 @@
       <% if course.status == "inprogress" %>
         <%= button_to "Mark as Complete", mark_as_course_path , method: :patch %>
       <%else %>
-        <%= button_to "Mark as In Progress", mark_as_course_path , method: :patch %>
+        <%= button_to "Mark as In Progress", mark_as_course_path , method: :patch%>
       <% end %>
     <% end %>
   <% end %>
