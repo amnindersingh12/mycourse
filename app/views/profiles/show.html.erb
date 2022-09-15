@@ -9,11 +9,12 @@
   <%if current_user.role == 'admin'%>
     <%= link_to "Add Course", new_course_path %>
     <br>
+    <hr>
     <h1>Course Created by You</h1>
     <% @courses.each do |course|%>
       <% if course.creator_id == current_user.id  %>
         <p>
-          Name of the course : <%=link_to  display_course(course.id).name, course_path(course.id) %>
+          Name of the course : <%=link_to display_course(course.id).name, course_path(course.id) %>
         </p>
       <% end %>
     <% end %>
@@ -21,14 +22,16 @@
   <hr>
   <br>
   <% if @profile.courses.empty? %>
-    <p>No enrolled course yet</p>
+    <p>You have not enrolled in course yet</p>
   <% else %>
     <p>Courses, your are enrolled in:<% @profile.courses.each do |c|%>
         <hr>
-        <%=link_to  c.name ,course_path(c.id)%>,
-        Joined on <%= c.created_at.strftime("%b %d") %>
+        <p>Course Name => <%=link_to  c.name ,course_path(c.id)%></p>
+        <p>  Enrollment date => <%= c.created_at.strftime("%b %d, %Y") %></p>
+        <p>Show status => <%= show_status(c) %></p>
         <hr>
-      <% end %></p>
+      <% end %>
+    </p>
   <% end %>
 </div>
 <%# [#<UserCourse:0x000000010b1d1a08

@@ -37,7 +37,7 @@ class User < ApplicationRecord
   end
 
   def mark_as_(id)
-    x = user_courses.where(course_id: id).first
+    x = user_courses.find_by(course_id: id)
     if x.status == 'inprogress'
       x.update(status: :completed)
     else

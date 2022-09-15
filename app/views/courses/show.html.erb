@@ -30,6 +30,5 @@
 <% end %>
 <%if current_user.role == 'admin' && @course.creator_id == current_user.id %>
   <%= link_to "Edit this course", edit_course_path(@course)%>
-
   <%= button_to "delete this course", course_path(@course), method: :delete%>
 <% end %>
