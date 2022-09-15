@@ -1,6 +1,9 @@
 <div>
   <p> Your email is  <%= @profile.email %></p>
   <%= link_to "sign out", destroy_user_session_path, method: :delete %>
+  <hr>
+  <p><%= link_to 'Edit Profile', edit_user_registration_path%></p>
+  <hr>
   <p><%= link_to 'Available Courses', courses_path%></p>
   <hr>
   <%if current_user.role == 'admin'%>

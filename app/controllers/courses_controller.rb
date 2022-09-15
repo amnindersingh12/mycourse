@@ -1,8 +1,13 @@
 class CoursesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_course_id, only: %i[show mark_as enroll destroy]
+  before_action :set_course_id, only: %i[show update edit mark_as enroll destroy]
   def index
-    @courses = Course.all
+    # binding.pry
+    @courses = if params[:query].blank?
+                 Course.all
+               else
+                 Course.filter_course(params[:query])
+               end
   end
 
   def new
@@ -37,6 +42,13 @@ class CoursesController < ApplicationController
     redirect_to root_path
   end
 
+  def edit; end
+
+  def update
+    @course.update(course_params)
+    redirect_to @course
+  end
+
   def mark_as
     current_user.mark_as_(@course.id)
     redirect_to @course
@@ -49,6 +61,6 @@ class CoursesController < ApplicationController
   end
 
   def course_params
-    params.require(:course).permit(:language, :creator_id, :creator, :name)
+    params.require(:course).permit(:language, :creator_id, :creator, :query, :name)
   end
 end

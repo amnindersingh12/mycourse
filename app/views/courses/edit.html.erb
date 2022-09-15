@@ -1,0 +1,17 @@
+<h1>Enter Course Details</h1>
+<br>
+<%= form_with model: @course do |f| %>
+  <div class="mb-3">
+    <%= f.label :name, "Course name" %>
+    <%= f.text_field :name ,placeholder: "Enter Your course name"%>
+  </div>
+  <%= f.hidden_field :creator_id, value: current_user.id %>
+  <div class="mb-3">
+    <%= f.label :creator, "Course Creator" %>
+    <%= f.text_field :creator ,placeholder: "Enter Your name"%>
+  </div>
+  <div class="mb-3">    <%= f.label :language, "Language" %>
+    <%= f.text_field :language, placeholder: "Enter the programming langugae(like js ruby )" %></div>
+  <%= f.submit "Submit"%>
+  <%# puts  params.inspect %>
+<% end %>

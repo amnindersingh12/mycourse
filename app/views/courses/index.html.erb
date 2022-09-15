@@ -9,6 +9,15 @@
   <%= link_to "Sign in", new_user_session_path %>
   <%= link_to "Sign up", new_user_registration_path %>
 <%end%>
+<div>
+  <p>
+    Filter courses
+    <%= form_with url: courses_path, method: :get do |form| %>
+      <%= form.text_field :query %>
+      <%= form.submit "Filter" %>
+    <% end %>
+  </p>
+</div>
 <div class="mt-5">
   <h1>list of all the available course</h1>
   <hr>

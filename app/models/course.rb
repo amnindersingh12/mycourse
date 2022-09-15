@@ -16,4 +16,5 @@ class Course < ApplicationRecord
   validates :name, uniqueness: true
   scope :completed_course, ->(id) { UserCourse.where(course_id: id,status: :completed) }
   scope :enrolled_users, ->(id){ UserCourse.where(course_id: id)}
+  scope :filter_course, ->(q) {where(language: q)}
 end
