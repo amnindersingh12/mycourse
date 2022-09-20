@@ -1,6 +1,8 @@
 class CoursesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_course_id, only: %i[show update edit mark_as enroll destroy]
+  before_action :set_admin, only: %i[new create destroy update edit]
+
   def index
     # binding.pry
     @courses = if params[:query].blank?
@@ -15,18 +17,22 @@ class CoursesController < ApplicationController
   end
 
   def show
-    @complete_count = Course.completed_course(@course).count
-    @number_of_enrolled_count = Course.enrolled_users(@course).count
+    @number_of_enrolled_count = @course.users.count
+    @complete_count = @course.count_of_complete
   end
 
   def enroll
     @enrolled = current_user.enroll_in(@course.id)
-    redirect_to @course if @enrolled.save
+    redirect_to @course, notice: 'Enrolled Successfully' if @enrolled.save
   end
 
   def create
     @course = current_user.courses.new(course_params)
-    redirect_to courses_path if @course.save
+    if @course.save
+      redirect_to courses_path, notice: "Course Created "
+    else
+      render :new
+    end
   end
 
   def destroy
@@ -38,7 +44,11 @@ class CoursesController < ApplicationController
 
   def update
     @course.update(course_params)
-    redirect_to @course
+    if @course.save
+      redirect_to @course
+    else
+      render :edit
+    end
   end
 
   def mark_as
@@ -48,11 +58,15 @@ class CoursesController < ApplicationController
 
   private
 
+  def set_admin
+    redirect_to root_path, notice: 'You are not an admin user!' if current_user.admin? == false
+  end
+
   def set_course_id
     @course = Course.find(params[:id])
   end
 
   def course_params
-    params.require(:course).permit(:language, :creator_id, :creator, :query, :name)
+    params.require(:course).permit(:language, :user_id, :query, :name)
   end
 end

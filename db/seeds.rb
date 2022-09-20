@@ -4,20 +4,20 @@
 # Examples:
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
-#   Character.create(name: "Luke", movie: movies.first)
+# Character.create(name: "Luke", movie: movies.first)
 puts 'Seeding Users...'
-User.create(email: 'user1@gmail.com', name: 'user1', password: '11111111', role: 'admin')
-User.create(email: 'user2@gmail.com', name: 'user2', password: '11111111')
-User.create(email: 'user3@gmail.com', name: 'user3', password: '11111111')
-User.create(email: 'user4@gmail.com', name: 'user4', password: '11111111', role: 'admin')
+User.create(email: 'user1@gmail.com', name: 'user1', password: '11111111', admin: true)
+User.create(email: 'user2@gmail.com', name: 'user2', password: '11111111',admin: false)
+User.create(email: 'user3@gmail.com', name: 'user3', password: '11111111',admin: false)
+User.create(email: 'user4@gmail.com', name: 'user4', password: '11111111', admin: true)
 puts 'Seeding Users done.'
 
 puts 'Seeding Courses...'
-Course.create(creator: 'user4', language: 'js', name: 'course1', creator_id: 4)
-Course.create(creator: 'user3', language: 'ruby', name: 'course2', creator_id: 3)
-Course.create(creator: 'user3', language: 'php', name: 'course3', creator_id: 3)
-Course.create(creator: 'user3', language: 'java', name: 'course4', creator_id: 3)
-Course.create(creator: 'user4', language: 'python', name: 'course5', creator_id: 4)
-Course.create(creator: 'user3', language: 'R', name: 'course6', creator_id: 3)
-Course.create(creator: 'user4', language: 'haskell', name: 'course7', creator_id: 4)
+Course.create(language: 'js', name: 'course1', user_id: 4)
+Course.create(language: 'ruby', name: 'course2', user_id: 3)
+Course.create(language: 'php', name: 'course3', user_id: 3)
+Course.create(language: 'java', name: 'course4', user_id: 3)
+Course.create(language: 'python', name: 'course5', user_id: 4)
+Course.create(language: 'R', name: 'course6', user_id: 3)
+Course.create(language: 'haskell', name: 'course7', user_id: 4)
 puts 'Seeding Courses done.'

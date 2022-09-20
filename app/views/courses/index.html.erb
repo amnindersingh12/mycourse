@@ -1,4 +1,4 @@
-<p><%= link_to "My profile", root_path%> </p>
+<p><%= link_to "My profile", profile_path(current_user)%> </p>
 <h1>Welcome to Course</h1>
 <% if current_user %>
   <p>Hello <%=current_user.email %></p>

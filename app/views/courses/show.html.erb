@@ -1,9 +1,9 @@
-<p><%= link_to "My profile", root_path%> </p>
+<p><%= link_to "My profile", profile_path(current_user)%> </p>
 <p><%= link_to 'All Courses', courses_path%></p>
 <h1>Course Content </h1>
 <hr>
 <h2>Course Name is <%=@course.name%></h2>
-<h2>Course creator Name is <%=@course.creator%></h2>
+<h2>Course creator Name is <%= @course.admin_user.name%></h2>
 <h2>Course language is <%=@course.language%></h2>
 <hr>
 <br>
@@ -14,21 +14,18 @@
 <hr>
 <br>
 <% if current_user.already_enrolled?(@course) %>
-  <h1>Your are now enrolled in this  <%= link_to @course.name,course_path(@course.id)%> course</h1>
+  <h1>Your are now enrolled in this  <%= @course.name%> course</h1>
   <% current_user.user_courses.each do |course| %>
     <% if current_user.id == course.user_id && @course.id == course.course_id%>
-      <h1>Here is your progress status: <%=course.status %></h1>
-      <% if course.status == "inprogress" %>
+      <h1>Here is your progress status: <%= course.status ? "Completed":"In Progress"%></h1>
+      <% if course.status? == false %>
         <%= button_to "Mark as Complete", mark_as_course_path , method: :patch %>
-      <%else %>
-        <%= button_to "Mark as In Progress", mark_as_course_path , method: :patch%>
       <% end %>
-    <% end %>
-  <% end %>
+    <% end %>  <% end %>
 <% else %>
   <%= button_to "Click Me(Enroll)",enroll_course_path%>
 <% end %>
-<%if current_user.role == 'admin' && @course.creator_id == current_user.id %>
+<%if current_user.admin? && @course.user_id == current_user.id %>
   <%= link_to "Edit this course", edit_course_path(@course)%>
   <%= button_to "delete this course", course_path(@course), method: :delete%>
 <% end %>

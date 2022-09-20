@@ -3,7 +3,7 @@
 # Table name: user_courses
 #
 #  id         :integer          not null, primary key
-#  status     :string           default("inprogress")
+#  status     :boolean          default(FALSE)
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  course_id  :integer          not null
@@ -21,5 +21,5 @@
 #
 class UserCourse < ApplicationRecord
   belongs_to :user
-  belongs_to :course
+  belongs_to :course,touch: true
 end

@@ -6,15 +6,15 @@
   <hr>
   <p><%= link_to 'Available Courses', courses_path%></p>
   <hr>
-  <%if current_user.role == 'admin'%>
+  <%if current_user.admin?%>
     <%= link_to "Add Course", new_course_path %>
     <br>
     <hr>
     <h1>Course Created by You</h1>
     <% @courses.each do |course|%>
-      <% if course.creator_id == current_user.id  %>
+      <% if course.user_id == current_user.id  %>
         <p>
-          Name of the course : <%=link_to display_course(course.id).name, course_path(course.id) %>
+          Name of the course : <%=link_to course.name, course_path(course.id) %>
         </p>
       <% end %>
     <% end %>
@@ -25,13 +25,15 @@
     <p>You have not enrolled in course yet</p>
   <% else %>
     <h1>Courses,in which you are enrolled :<% @profile.courses.each do |c|%>    </h1>
-
-        <hr>
-        <p>Course Name => <%=link_to  c.name ,course_path(c.id)%></p>
-        <p>  Enrollment date => <%= c.created_at.strftime("%b %d, %Y") %></p>
-        <p>Show status => <%= show_status(c) %></p>
-        <hr>
+      <hr>
+      <p>Course Name => <%=link_to  c.name ,course_path(c.id)%></p>
+      <p>  Enrollment date => <%= enrolled_at(c)%></p>
+      <%if show_status(c) == "Completed" %>
+        <p>  Completed date => <%= completed_at(c)%></p>
       <% end %>
+      <p>Show status => <%= show_status(c) %></p>
+      <hr>
+    <% end %>
   <% end %>
 </div>
 <%# [#<UserCourse:0x000000010b1d1a08
