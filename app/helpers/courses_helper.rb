@@ -1,6 +1,6 @@
 module CoursesHelper
   def show_status(course)
-    current_user.user_courses.find_by(course_id: course.id).status ? 'Completed' : 'In Progress'
+    current_user.user_courses.find_by(course_id: course.id).status == 'completed' ? 'Completed' : 'In Progress'
   end
 
   def enrolled_at(course)

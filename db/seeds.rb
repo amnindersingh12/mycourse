@@ -6,10 +6,10 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 # Character.create(name: "Luke", movie: movies.first)
 puts 'Seeding Users...'
-User.create(email: 'user1@gmail.com', name: 'user1', password: '11111111', admin: true)
-User.create(email: 'user2@gmail.com', name: 'user2', password: '11111111',admin: false)
-User.create(email: 'user3@gmail.com', name: 'user3', password: '11111111',admin: false)
-User.create(email: 'user4@gmail.com', name: 'user4', password: '11111111', admin: true)
+User.create(email: 'user1@gmail.com', name: 'user1', password: '11111111', role: 1)
+User.create(email: 'user2@gmail.com', name: 'user2', password: '11111111', role: 0)
+User.create(email: 'user3@gmail.com', name: 'user3', password: '11111111', role: 0)
+User.create(email: 'user4@gmail.com', name: 'user4', password: '11111111', role: 1)
 puts 'Seeding Users done.'
 
 puts 'Seeding Courses...'

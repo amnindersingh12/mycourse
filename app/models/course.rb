@@ -31,7 +31,7 @@ class Course < ApplicationRecord
   end
 
   def count_of_complete
-    user_courses.where(status: true).count
+    user_courses.where(status: true).size
   end
 
   scope :filter_course, ->(q) { where(language: q.capitalize) }

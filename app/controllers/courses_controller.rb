@@ -1,7 +1,7 @@
 class CoursesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_course_id, only: %i[show update edit mark_as enroll destroy]
-  before_action :set_admin, only: %i[new create destroy update edit]
+  before_action :is_admin, only: %i[new create destroy update edit]
 
   def index
     # binding.pry
@@ -17,21 +17,28 @@ class CoursesController < ApplicationController
   end
 
   def show
-    @number_of_enrolled_count = @course.users.count
+    @number_of_enrolled_count = @course.users.size
     @complete_count = @course.count_of_complete
   end
 
   def enroll
     @enrolled = current_user.enroll_in(@course.id)
-    redirect_to @course, notice: 'Enrolled Successfully' if @enrolled.save
+    if @enrolled.save
+      flash[:notice] = 'Enrolled Successfully'
+      redirect_to @course
+    else
+      flash[:alert] = @enrolled.errors.full_messages
+
+    end
   end
 
   def create
     @course = current_user.courses.new(course_params)
     if @course.save
-      redirect_to courses_path, notice: "Course Created "
+      redirect_to courses_path, notice: 'Course Created '
     else
-      render :new
+      flash[:alert] = @course.errors.full_messages
+      render :new, notice: 'Failed to create Course, try again!'
     end
   end
 
@@ -43,10 +50,11 @@ class CoursesController < ApplicationController
   def edit; end
 
   def update
-    @course.update(course_params)
-    if @course.save
+    @updated = @course.update(course_params)
+    if @updated.save
       redirect_to @course
     else
+      flash[:alert] = @updated.errors.full_messages
       render :edit
     end
   end
@@ -58,8 +66,8 @@ class CoursesController < ApplicationController
 
   private
 
-  def set_admin
-    redirect_to root_path, notice: 'You are not an admin user!' if current_user.admin? == false
+  def is_admin
+    redirect_to root_path, notice: 'You are not an admin user!' unless current_user.admin?
   end
 
   def set_course_id

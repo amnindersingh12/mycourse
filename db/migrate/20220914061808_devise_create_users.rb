@@ -12,7 +12,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[7.0]
       t.datetime :reset_password_sent_at
 
       ## Rememberable
-      t.datetime :remember_created_at
+      # t.datetime :remember_created_at
 
       ## Trackable
       # t.integer  :sign_in_count, default: 0, null: false
@@ -32,7 +32,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[7.0]
       # t.string   :unlock_token # Only if unlock strategy is :email or :both
       # t.datetime :locked_at
 
-      t.string :role, default: :member
+      t.integer :role, default: 0
       t.string :name
 
       t.timestamps null: false

@@ -17,8 +17,8 @@
   <h1>Your are now enrolled in this  <%= @course.name%> course</h1>
   <% current_user.user_courses.each do |course| %>
     <% if current_user.id == course.user_id && @course.id == course.course_id%>
-      <h1>Here is your progress status: <%= course.status ? "Completed":"In Progress"%></h1>
-      <% if course.status? == false %>
+      <h1>Here is your progress status: <%= course.status=="completed" ? "Completed":"In Progress"%></h1>
+      <% if course.status == "inprogress" %>
         <%= button_to "Mark as Complete", mark_as_course_path , method: :patch %>
       <% end %>
     <% end %>  <% end %>

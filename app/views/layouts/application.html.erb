@@ -12,9 +12,10 @@
     <%= javascript_include_tag "application" %>
   </head>
   <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <p class="notice"><%= flash[:notice] %></p>
+    <p class="alert"><%= flash[:alert] %></p>
     <main  >
+      <%= flash[:notice]%>
       <%= yield %>
     </main>
   </body>

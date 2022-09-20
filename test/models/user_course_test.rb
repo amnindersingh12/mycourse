@@ -3,7 +3,7 @@
 # Table name: user_courses
 #
 #  id         :integer          not null, primary key
-#  status     :boolean          default(FALSE)
+#  status     :integer          default(0)
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  course_id  :integer          not null
