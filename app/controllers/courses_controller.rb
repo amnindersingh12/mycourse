@@ -18,7 +18,7 @@ class CoursesController < ApplicationController
 
   def show
     @number_of_enrolled_count = @course.users.size
-    @complete_count = @course.count_of_complete
+    @complete_count = UserCourse.completed_courses(@course.id)
   end
 
   def enroll

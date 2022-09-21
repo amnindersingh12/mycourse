@@ -24,6 +24,7 @@ class UserCourse < ApplicationRecord
   belongs_to :course
   validates :user_id, uniqueness: { scope: :course_id }
 
-  enum :status, [:inprogress, :completed]
+  enum :status, %i[inprogress completed]
+  scope :completed_courses, ->(q) { where(course_id: q, status: true).size }
+  # SELECT COUNT(*) FROM "user_courses" WHERE "user_courses"."course_id" = q AND "user_courses"."status" = true
 end
-
