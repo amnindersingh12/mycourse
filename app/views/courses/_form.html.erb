@@ -1,0 +1,20 @@
+<h1>Enter Course Details</h1>
+<br>
+<%= form_with  model: @course, url: { action: "create",controller: "courses" },method: :post do |f| %>
+  <% if @course.errors.any?  %>
+    <ul>
+      <% @course.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  <% end %>
+  <div class="mb-3">
+    <%= f.label :name, "Course name" %>
+    <%= f.text_field :name ,placeholder: "Enter Your course name"%>
+  </div>
+  <%= f.hidden_field :user_id, value: current_user.id %>
+  <div class="mb-3">    <%= f.label :language, "Language" %>
+    <%= f.text_field :language, placeholder: "Enter the programming langugae(like js ruby )" %></div>
+  <%= f.submit "Submit"%>
+  <%# puts  params.inspect %>
+<% end %>

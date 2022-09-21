@@ -1,7 +1,7 @@
 # Here is the new task for you. I will share the requirements below.
 ## Build new app for courses, where user can enroll into multiple courses
 
-1. Courses model with fields name, `language (like ruby, python, js) and course creator (user who added that course)`
+1. Courses model with fields `name, language (like ruby, python, js) and course creator (user who added that course)`
 2. User model with fields `name, email, role (there can be only two roles: “Admin” and “Member”)` To keep it simple: Roles can be set to user from rails console.
 3. User with `role=admin` can do CRUD operations on courses.
 4. User with `role=member`, can only see all courses and enroll into that courses
