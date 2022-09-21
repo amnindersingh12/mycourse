@@ -5,6 +5,7 @@ class CoursesController < ApplicationController
 
   def index
     # binding.pry
+    # flash[:notice] = "Welciome tmmmm"
     @courses = if params[:query].blank?
                  Course.all
                else
@@ -27,7 +28,7 @@ class CoursesController < ApplicationController
       flash[:notice] = 'Enrolled Successfully'
       redirect_to @course
     else
-      flash[:alert] = @enrolled.errors.full_messages
+      flash[:danger] = @enrolled.errors.full_messages
 
     end
   end
@@ -37,8 +38,8 @@ class CoursesController < ApplicationController
     if @course.save
       redirect_to courses_path, notice: 'Course Created '
     else
-      flash[:alert] = @course.errors.full_messages
-      render :new, notice: 'Failed to create Course, try again!'
+      flash[:danger] = @course.errors.full_messages
+      render :new
     end
   end
 
@@ -54,12 +55,13 @@ class CoursesController < ApplicationController
     if @updated.save
       redirect_to @course
     else
-      flash[:alert] = @updated.errors.full_messages
+      flash[:danger] = @updated.errors.full_messages
       render :edit
     end
   end
 
   def mark_as
+    flash[:notice] = "Marked as Completed"
     current_user.mark_as_(@course.id)
     redirect_to @course
   end

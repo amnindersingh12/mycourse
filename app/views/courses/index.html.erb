@@ -2,7 +2,7 @@
 <h1>Welcome to Course</h1>
 <% if current_user %>
   <p>Hello <%=current_user.email %></p>
-  <%= link_to "sign out", destroy_user_session_path, method: :delete %>
+  <%= button_to "logout", destroy_user_session_path, method: :delete  %>
 <%else  %>
   <p>You are not signed in </p>
   <p>Please Sign in</p>
