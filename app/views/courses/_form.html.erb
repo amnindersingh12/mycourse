@@ -15,6 +15,11 @@
   <%= f.hidden_field :user_id, value: current_user.id %>
   <div class="mb-3">    <%= f.label :language, "Language" %>
     <%= f.text_field :language, placeholder: "Enter the programming langugae(like js ruby )" %></div>
+    <div class="mb-3">
+    <%= f.label :cover, "Course Cover"%>
+   <%= f.file_field :cover%>
+    </div>
+
   <%= f.submit "Submit"%>
   <%# puts  params.inspect %>
 <% end %>

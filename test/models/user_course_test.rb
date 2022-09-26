@@ -3,7 +3,7 @@
 # Table name: user_courses
 #
 #  id         :integer          not null, primary key
-#  status     :integer          default(0)
+#  status     :integer          default("inprogress")
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  course_id  :integer          not null
@@ -19,7 +19,7 @@
 #  course_id  (course_id => courses.id)
 #  user_id    (user_id => users.id)
 #
-require "test_helper"
+require 'test_helper'
 
 class UserCourseTest < ActiveSupport::TestCase
   # test "the truth" do

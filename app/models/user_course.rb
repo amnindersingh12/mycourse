@@ -3,7 +3,7 @@
 # Table name: user_courses
 #
 #  id         :integer          not null, primary key
-#  status     :integer          default(0)
+#  status     :integer          default("inprogress")
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  course_id  :integer          not null
@@ -20,6 +20,7 @@
 #  user_id    (user_id => users.id)
 #
 class UserCourse < ApplicationRecord
+  # self.table_name = "course_users"
   belongs_to :user
   belongs_to :course
   validates :user_id, uniqueness: { scope: :course_id }

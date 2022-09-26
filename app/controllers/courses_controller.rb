@@ -6,6 +6,8 @@ class CoursesController < ApplicationController
   def index
     # binding.pry
     # flash[:notice] = "Welciome tmmmm"
+
+
     @courses = if params[:query].blank?
                  Course.all
                else
@@ -20,6 +22,11 @@ class CoursesController < ApplicationController
   def show
     @number_of_enrolled_count = @course.users.size
     @complete_count = UserCourse.completed_courses(@course.id)
+    # if @complete_count.nil? || @number_of_enrolled_count
+    #   flash.now[:alert] = 'Unable to find details about this course'
+    #   @courses = Course.all
+    #   render :index
+    # end
   end
 
   def enroll
@@ -61,7 +68,7 @@ class CoursesController < ApplicationController
   end
 
   def mark_as
-    flash[:notice] = "Marked as Completed"
+    flash[:notice] = 'Marked as Completed'
     current_user.mark_as_(@course.id)
     redirect_to @course
   end
@@ -77,6 +84,6 @@ class CoursesController < ApplicationController
   end
 
   def course_params
-    params.require(:course).permit(:language, :user_id, :query, :name)
+    params.require(:course).permit(:language, :user_id, :query, :name,:cover)
   end
 end

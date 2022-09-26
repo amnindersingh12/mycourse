@@ -22,6 +22,7 @@ class Course < ApplicationRecord
   has_many :users, through: :user_courses
   validates :name, uniqueness: true
   validates :language, :name, presence: true
+  has_one_attached :cover
 
   belongs_to :admin_user, class_name: 'User', foreign_key: :user_id
   before_save :capitalize_everything
