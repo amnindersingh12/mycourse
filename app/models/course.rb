@@ -31,8 +31,8 @@ class Course < ApplicationRecord
     CourseNotificationJob.perform_later(recipp(admin_user), Course.last)
   end
 
-  def recipp(admin_user)
-    admin_user.created_courses.map { |x| x.users.pluck(:email) }.flatten.uniq - %w[admin_user.email]
+  def recipp(creator_user)
+    creator_user.created_courses.map { |x| x.users.pluck(:email) }.flatten.uniq - %w[creator_user.email]
   end
 
   def capitalize_everything
