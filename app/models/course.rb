@@ -27,6 +27,14 @@ class Course < ApplicationRecord
   belongs_to :admin_user, class_name: 'User', foreign_key: :user_id
   before_save :capitalize_everything
 
+  after_save do
+    CourseNotificationJob.perform_later(recipp(admin_user), Course.last)
+  end
+
+  def recipp(creator_user)
+    creator_user.created_courses.map { |x| x.users.pluck(:email) }.flatten.uniq - %w[creator_user.email]
+  end
+
   def capitalize_everything
     self.language = language.capitalize
   end
