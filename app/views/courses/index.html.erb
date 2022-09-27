@@ -1,8 +1,5 @@
 <p><%= link_to "My profile", profile_path(current_user)%> </p>
 <h1>Welcome to Course</h1>
-<div id="target-for-change">
-  Now you see "ME"!😁
-</div>
 <% if current_user %>
   <p>Hello <%=current_user.email %></p>
   <%= button_to "logout", destroy_user_session_path, method: :delete  %>
