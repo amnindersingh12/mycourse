@@ -78,3 +78,4 @@ gem 'annotate'
 gem 'devise'
 gem 'letter_opener', group: :development
 gem 'pry-rails'
+gem 'sidekiq'

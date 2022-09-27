@@ -41,11 +41,11 @@ class CoursesController < ApplicationController
 
   def create
     @course = current_user.courses.new(course_params)
-    @c_id = (Course.select do |i|
-                              i.user_id == current_user.id
-                            end.select { |x| x.users.count > 0 }.select { |user| user.users.sort }.pluck(:id))
-    @recipent = Course.find_by(id: @c_id).users.pluck(:email)
-    # binding.pry
+
+    @recipent = @course.recipp(current_user)
+    # current_user.created_courses.map { |x| x.users.pluck(:email) }.flatten.uniq
+    # @recipent -= %w[cureent_user.email]
+
     if @course.save
       UserMailer.send_notification(@recipent, @course).deliver_now
       redirect_to courses_path, notice: 'Course Created '
