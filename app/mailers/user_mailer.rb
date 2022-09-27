@@ -1,5 +1,4 @@
 class UserMailer < ApplicationMailer
-
   def send_notification(recipent, course)
     @course = course
     mail(
