@@ -76,4 +76,5 @@ group :test do
 end
 gem 'annotate'
 gem 'devise'
+gem 'letter_opener', group: :development
 gem 'pry-rails'

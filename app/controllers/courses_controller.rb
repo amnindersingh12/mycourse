@@ -7,7 +7,6 @@ class CoursesController < ApplicationController
     # binding.pry
     # flash[:notice] = "Welciome tmmmm"
 
-
     @courses = if params[:query].blank?
                  Course.all
                else
@@ -42,7 +41,13 @@ class CoursesController < ApplicationController
 
   def create
     @course = current_user.courses.new(course_params)
+    @c_id = (Course.select do |i|
+                              i.user_id == current_user.id
+                            end.select { |x| x.users.count > 0 }.select { |user| user.users.sort }.pluck(:id))
+    @recipent = Course.find_by(id: @c_id).users.pluck(:email)
+    # binding.pry
     if @course.save
+      UserMailer.send_notification(@recipent, @course).deliver_now
       redirect_to courses_path, notice: 'Course Created '
     else
       flash[:danger] = @course.errors.full_messages
@@ -84,6 +89,6 @@ class CoursesController < ApplicationController
   end
 
   def course_params
-    params.require(:course).permit(:language, :user_id, :query, :name,:cover)
+    params.require(:course).permit(:language, :user_id, :query, :name, :cover)
   end
 end
