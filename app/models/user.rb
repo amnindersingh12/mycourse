@@ -27,7 +27,9 @@ class User < ApplicationRecord
   has_many :user_courses, dependent: :destroy
   has_many :courses, through: :user_courses
 
-  enum :role, %i[member admin]
+  has_many :created_courses, class_name: :Course, foreign_key: :user_id
+
+  enum :role, %i[member admin], default: :member
 
   def enroll_in(course)
     user_courses.create(course_id: course)

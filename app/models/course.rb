@@ -22,9 +22,18 @@ class Course < ApplicationRecord
   has_many :users, through: :user_courses
   validates :name, uniqueness: true
   validates :language, :name, presence: true
+  has_one_attached :cover
 
   belongs_to :admin_user, class_name: 'User', foreign_key: :user_id
   before_save :capitalize_everything
+
+  after_save do
+    CourseNotificationJob.perform_later(recipp(admin_user), Course.last)
+  end
+
+  def recipp(admin_user)
+    admin_user.created_courses.map { |x| x.users.pluck(:email) }.flatten.uniq - %w[admin_user.email]
+  end
 
   def capitalize_everything
     self.language = language.capitalize

@@ -1,6 +1,6 @@
-require_relative "boot"
+require_relative 'boot'
 
-require "rails/all"
+require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -16,7 +16,10 @@ module Mycourse
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #
-    config.time_zone = "Asia/Kolkata"
+    config.time_zone = 'Asia/Kolkata'
+    config.active_job.queue_adapter = :sidekiq
+    config.action_mailer.default_url_options = { host: 'localhost:3000' }
+
     # config.eager_load_paths << Rails.root.join("extras")
   end
 end

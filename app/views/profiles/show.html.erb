@@ -1,6 +1,6 @@
 <div>
   <p> Your email is  <%= @profile.email %></p>
-  <%= link_to "sign out", destroy_user_session_path, method: :delete %>
+  <%= button_to "logout", destroy_user_session_path, method: :delete  %>
   <hr>
   <p><%= link_to 'Edit Profile', edit_user_registration_path%></p>
   <hr>
@@ -11,12 +11,10 @@
     <br>
     <hr>
     <h1>Course Created by You</h1>
-    <% @courses.each do |course|%>
-      <% if course.user_id == current_user.id  %>
-        <p>
-          Name of the course : <%=link_to course.name, course_path(course.id) %>
-        </p>
-      <% end %>
+    <% @profile.created_courses.each  do |course|%>
+      <p>
+        Name of the course : <%=link_to course.name, course_path(course.id) %>
+      </p>
     <% end %>
   <% end %>
   <hr>
