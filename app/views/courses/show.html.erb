@@ -6,7 +6,8 @@
 <% if @course.cover.attached? %>
   <%= image_tag @course.cover  , size: "1080x720"%>
 <% else %>
-  <%=image_tag  'https://waifu.vercel.app/sfw/highfive' %>
+  <%# <%=image_tag  'https://waifu.vercel.app/sfw/highfive' %>
+  <%= image_tag 'https://picsum.photos/seed/picsum/200/300' %>
 <% end %>
 <hr>
 <h4>Course Name is <%=@course.name%></h4>

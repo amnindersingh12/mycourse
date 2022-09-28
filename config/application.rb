@@ -17,6 +17,9 @@ module Mycourse
     # in config/environments, which are processed later.
     #
     config.time_zone = 'Asia/Kolkata'
+    config.active_job.queue_adapter = :sidekiq
+    config.action_mailer.default_url_options = { host: 'localhost:3000' }
+
     # config.eager_load_paths << Rails.root.join("extras")
   end
 end
