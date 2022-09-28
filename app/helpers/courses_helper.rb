@@ -4,19 +4,19 @@ module CoursesHelper
     #                   week,month,day at hr,min,am/pm
   end
 
-  def find_course(course)
-    current_user.user_courses.find_by(course_id: course.id)
+  def current_subscription(id)
+    current_user.subscriptions.find_by(course_id: id)
   end
 
   def show_status(course)
-    find_course(course).status == 'completed' ? 'Completed' : 'In Progress'
+    current_subscription(course).status == 'completed' ? 'Completed' : 'In Progress'
   end
 
   def enrolled_at(course)
-    datetime_format find_course(course).created_at
+    datetime_format current_subscription(course).created_at
   end
 
   def completed_at(course)
-    datetime_format find_course(course).updated_at
+    datetime_format current_subscription(course).updated_at
   end
 end

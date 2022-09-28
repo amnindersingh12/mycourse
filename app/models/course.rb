@@ -18,21 +18,23 @@
 #  user_id  (user_id => users.id)
 #
 class Course < ApplicationRecord
-  has_many :user_courses, dependent: :destroy
-  has_many :users, through: :user_courses
+  # user course relationship for current course and users
+  has_many :subscriptions, class_name: 'UserCourse', dependent: :destroy
+
+  # users enrolled in the course
+  has_many :subscribers, through: :subscriptions, source: :user
+
   validates :name, uniqueness: true
   validates :language, :name, presence: true
   has_one_attached :cover
 
-  belongs_to :admin_user, class_name: 'User', foreign_key: :user_id
+  # list the admin of the course
+  belongs_to :owner, class_name: 'User', foreign_key: :user_id
+
   before_save :capitalize_everything
 
   after_save do
-    CourseNotificationJob.perform_later(recipp(admin_user), Course.last)
-  end
-
-  def recipp(creator_user)
-    creator_user.created_courses.map { |x| x.users.pluck(:email) }.flatten.uniq - %w[creator_user.email]
+    CourseNotificationJob.perform_later(owner.recipp, Course.last)
   end
 
   def capitalize_everything
