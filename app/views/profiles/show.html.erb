@@ -25,11 +25,11 @@
     <h1>Courses,in which you are enrolled :<% @profile.courses.each do |c|%>    </h1>
       <hr>
       <p>Course Name => <%=link_to  c.name ,course_path(c.id)%></p>
-      <p>  Enrollment date => <%= enrolled_at(c)%></p>
-      <%if show_status(c) == "Completed" %>
-        <p>  Completed date => <%= completed_at(c)%></p>
+      <p>  Enrollment date => <%= l current_subscription(c.id).created_at, format: :custom %></p>
+      <%if current_subscription(c.id).status == "completed" %>
+        <p>  Completed date =><%= l current_subscription(c.id).updated_at, format: :custom %></p>
       <% end %>
-      <p>Show status => <%= show_status(c) %></p>
+      <p>Show status =>   <%=  current_subscription(c.id).status== "inprogress" ? t('in_progress_status') : t('completed_status') %> </p>
       <hr>
     <% end %>
   <% end %>
