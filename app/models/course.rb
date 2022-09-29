@@ -31,14 +31,12 @@ class Course < ApplicationRecord
   # list the admin of the course
   belongs_to :owner, class_name: 'User', foreign_key: :user_id
 
-  before_save :capitalize_everything
-
-  after_save do
-    CourseNotificationJob.perform_later(owner.recipp, Course.last)
+  before_save do
+    self.language = language.capitalize
   end
 
-  def capitalize_everything
-    self.language = language.capitalize
+  after_save do
+    CourseNotificationJob.perform_later(Recipient.new(owner).list_of_recipient, Course.last)
   end
 
   scope :filter_course, ->(q) { where(language: q.capitalize) }

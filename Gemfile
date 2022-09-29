@@ -79,3 +79,5 @@ gem 'devise'
 gem 'letter_opener', group: :development
 gem 'pry-rails'
 gem 'sidekiq'
+
+gem 'ruby-lsp', '~> 0.3.2', group: :development

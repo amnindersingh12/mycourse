@@ -1,13 +1,7 @@
 <h1>Enter Course Details</h1>
 <br>
 <%= form_with  model: @course, url: { action: "create",controller: "courses" },method: :post do |f| %>
-  <% if @course.errors.any?  %>
-    <ul>
-      <% @course.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-    </ul>
-  <% end %>
+  <%= render "devise/shared/error_messages", resource:@course%>
   <div class="mb-3">
     <%= f.label :name, "Course name" %>
     <%= f.text_field :name ,placeholder: "Enter Your course name"%>
@@ -15,10 +9,10 @@
   <%= f.hidden_field :user_id, value: current_user.id %>
   <div class="mb-3">    <%= f.label :language, "Language" %>
     <%= f.text_field :language, placeholder: "Enter the programming langugae(like js ruby )" %></div>
-    <div class="mb-3">
+  <div class="mb-3">
     <%= f.label :cover, "Course Cover"%>
-   <%= f.file_field :cover%>
-    </div>
+    <%= f.file_field :cover%>
+  </div>
 
   <%= f.submit "Submit"%>
   <%# puts  params.inspect %>
