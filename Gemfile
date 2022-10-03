@@ -56,6 +56,8 @@ gem 'bootsnap', require: false
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'
   gem 'debug', platforms: %i[mri mingw x64_mingw]
 end
 
@@ -76,10 +78,12 @@ group :test do
   gem 'selenium-webdriver'
   gem 'webdrivers'
 end
+
+gem 'database_cleaner'
+gem 'faker'
 gem 'annotate'
 gem 'devise'
 gem 'letter_opener', group: :development
 gem 'pry-rails'
 gem 'sidekiq'
 
-gem 'ruby-lsp', '~> 0.3.2', group: :development
