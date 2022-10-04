@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe "Users", type: :request do
-include_context "db_cleanup"
+RSpec.describe 'Users', type: :request do
+  # include_context 'db_cleanup'
   # describe "POST /users" do
   #   xit "works! (now write some real specs)" do
   #     get users_path

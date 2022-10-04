@@ -20,10 +20,10 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  it 'is valid with name' do
-      expect(build(:member_user)).to be_valid
+  context 'when name is valid' do
+    it { expect(build(:member_user)).to be_valid }
   end
-  it 'is invalid without name' do
-    expect(build(:member_user, name: nil)).not_to be_valid
+  context 'when name is invalid' do
+    it { expect(build(:member_user, name: nil)).not_to be_valid }
   end
 end

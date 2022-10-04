@@ -15,5 +15,4 @@ module Enrollment
       AlreadyEnrolled.call(@course, @user)
     end
   end
-  
 end
