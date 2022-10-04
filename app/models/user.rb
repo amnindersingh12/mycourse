@@ -34,23 +34,4 @@ class User < ApplicationRecord
   has_many :main_courses, class_name: :Course
 
   enum :role, %i[member admin], default: :member
-
-  def enroll_in(id)
-    subscriptions.create(course_id: id)
-  end
-
-  # (will implement it using Service)
-  def recipp
-    main_courses.includes(:subscribers).map do |x|
-      x.subscribers.pluck(:email)
-    end.flatten.uniq - [email]
-  end
-
-  def already_enrolled?(id)
-    courses.include?(id)
-  end
-
-  def mark_as_(id)
-    subscriptions.find_by(course_id: id).update(status: 1)
-  end
 end

@@ -1,8 +1,7 @@
 class CoursesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_course_id, only: %i[show update edit mark_as enroll destroy]
-  before_action :is_admin, only: %i[new create destroy update edit]
-
+  before_action :set_course_id, only: %i[show update edit enroll destroy mark_as]
+  before_action :require_admin, only: %i[new create destroy update edit]
   def index
     @courses = if params[:query].blank?
                  Course.all
@@ -16,30 +15,29 @@ class CoursesController < ApplicationController
   end
 
   def show
+    @regestered = Enrollment::AlreadyEnrolled.call(@course, current_user)
     @number_of_enrolled_count = @course.subscribers.size
     @complete_count = UserCourse.completed_courses(@course.id)
   end
 
   def enroll
-    @enrolled = current_user.enroll_in(@course.id)
-    if @enrolled.save
-      flash[:notice] = 'Enrolled Successfully'
-      redirect_to @course
-    else
-      flash[:danger] = @enrolled.errors.full_messages
-    end
+    @enrolled = Enrollment::EnrollIn.call(@course, current_user)
+    flash[:notice] = if @enrolled.save
+                       'Enrolled Successfully'
+                     else
+                       'Something went wrong!'
+                     end
+    redirect_to @course
   end
 
   def create
+    @recipent = Recipient.call(current_user)
     @course = current_user.courses.new(course_params)
-    @recipent = current_user.recipp
-
     if @course.save
-      # UserMailer.send_notification(@recipent, @course).deliver_now
-      redirect_to courses_path, notice: 'Course Created '
+      redirect_to @course
     else
-      flash[:danger] = @course.errors.full_messages
-      render :new
+      flash[:danger] = 'Something Went Wrong!'
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -52,23 +50,23 @@ class CoursesController < ApplicationController
 
   def update
     @updated = @course.update(course_params)
-    if @updated.save
+    if @updated
       redirect_to @course
     else
-      flash[:danger] = @updated.errors.full_messages
-      render :edit
+      flash[:danger] = 'Something Went Wrong!'
+      render :edit, status: :unprocessable_entity
     end
   end
 
   def mark_as
     flash[:notice] = 'Marked as Completed'
-    current_user.mark_as_(@course.id)
+    Enrollment::MarkAsComplete.call(@course, current_user)
     redirect_to @course
   end
 
   private
 
-  def is_admin
+  def require_admin
     redirect_to root_path, notice: 'You are not an admin user!' unless current_user.admin?
   end
 

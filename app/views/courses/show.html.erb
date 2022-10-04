@@ -2,7 +2,6 @@
 <p><%= link_to 'All Courses', courses_path%></p>
 <h1>Course Content </h1>
 <hr>
-<%# binding.pry %>
 <% if @course.cover.attached? %>
   <%= image_tag @course.cover  , size: "1080x720"%>
 <% else %>
@@ -21,14 +20,14 @@
 <h4>No of Enrolled users: <%=@number_of_enrolled_count %></h4>
 <hr>
 <br>
-<% if current_user.already_enrolled?(@course.id) %>
+<% if @regestered  %>
   <h1>Your are now enrolled in this  <%= @course.name%> course</h1>
-  <h1>Here is your progress status: <%= current_subscription(@Course.id).status=="completed" ? "Completed":"In Progress"%></h1>
-  <% if current_subscription(@Course.id).status == "inprogress" %>
+  <h1>Here is your progress status: <%=  current_subscription(@course.id).status== "inprogress" ? t('in_progress_status') : t('completed_status') %></h1>
+  <% if current_subscription(@course.id).status == "inprogress" %>
     <%= button_to "Mark as Complete", mark_as_course_path , method: :patch , form: {data: {'turbo-confirm': "Are you sure"}}%>
   <% end %>
 <% else %>
-  <%= button_to "Click Me(Enroll)",enroll_course_path,form: {data: {'turbo-confirm': "Are you sure"}}%>
+  <%= button_to "Click Me(Enroll)",enroll_course_path%>
 <% end %>
 <%if current_user.admin? && @course.user_id == current_user.id %>
   <%= link_to "Edit this course", edit_course_path(@course)%>
