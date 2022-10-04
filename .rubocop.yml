@@ -5,6 +5,6 @@ Style/Documentation:
 Lint/MissingSuper:
   Exclude:
     - "app/services/**/*"
-AllCops:
-  Exclude:
-    - "db/**/*"
+# AllCops:
+#   Exclude:
+#     - "db/**/*"
