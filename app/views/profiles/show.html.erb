@@ -11,7 +11,7 @@
     <br>
     <hr>
     <h1>Course Created by You</h1>
-    <% @profile.created_courses.each  do |course|%>
+    <% @profile.main_courses.each  do |course|%>
       <p>
         Name of the course : <%=link_to course.name, course_path(course.id) %>
       </p>

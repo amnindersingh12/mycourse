@@ -14,10 +14,10 @@ puts 'Seeding Users done.'
 
 puts 'Seeding Courses...'
 Course.create(language: 'js', name: 'course1', user_id: 4)
-Course.create(language: 'ruby', name: 'course2', user_id: 3)
-Course.create(language: 'php', name: 'course3', user_id: 3)
-Course.create(language: 'java', name: 'course4', user_id: 3)
+Course.create(language: 'ruby', name: 'course2', user_id: 1)
+Course.create(language: 'php', name: 'course3', user_id: 1)
+Course.create(language: 'java', name: 'course4', user_id: 1)
 Course.create(language: 'python', name: 'course5', user_id: 4)
-Course.create(language: 'R', name: 'course6', user_id: 3)
+Course.create(language: 'R', name: 'course6', user_id: 1)
 Course.create(language: 'haskell', name: 'course7', user_id: 4)
 puts 'Seeding Courses done.'

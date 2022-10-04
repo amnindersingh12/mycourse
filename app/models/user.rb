@@ -24,22 +24,33 @@ class User < ApplicationRecord
          :recoverable, :validatable
   validates :name, presence: true
 
-  has_many :user_courses, dependent: :destroy
-  has_many :courses, through: :user_courses
+  #  courses in which user is regestered (join table)
+  has_many :subscriptions, class_name: 'UserCourse', dependent: :destroy
 
-  has_many :created_courses, class_name: :Course, foreign_key: :user_id
+  # list of courses with their name and language
+  has_many :courses, through: :subscriptions
+
+  # courses created by the user
+  has_many :main_courses, class_name: :Course
 
   enum :role, %i[member admin], default: :member
 
-  def enroll_in(course)
-    user_courses.create(course_id: course)
+  def enroll_in(id)
+    subscriptions.create(course_id: id)
   end
 
-  def already_enrolled?(course)
-    courses.include?(course)
+  # (will implement it using Service)
+  def recipp
+    main_courses.includes(:subscribers).map do |x|
+      x.subscribers.pluck(:email)
+    end.flatten.uniq - [email]
+  end
+
+  def already_enrolled?(id)
+    courses.include?(id)
   end
 
   def mark_as_(id)
-    user_courses.find_by(course_id: id).update(status: 1)
+    subscriptions.find_by(course_id: id).update(status: 1)
   end
 end

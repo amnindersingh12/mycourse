@@ -11,7 +11,7 @@
 <% end %>
 <hr>
 <h4>Course Name is <%=@course.name%></h4>
-<h4>Course creator Name is <%= @course.admin_user.name%></h4>
+<h4>Course creator Name is <%= @course.owner.name%></h4>
 <h4>Course language is <%=@course.language%></h4>
 <hr>
 <br>
@@ -21,15 +21,12 @@
 <h4>No of Enrolled users: <%=@number_of_enrolled_count %></h4>
 <hr>
 <br>
-<% if current_user.already_enrolled?(@course) %>
+<% if current_user.already_enrolled?(@course.id) %>
   <h1>Your are now enrolled in this  <%= @course.name%> course</h1>
-  <% current_user.user_courses.each do |course| %>
-    <% if current_user.id == course.user_id && @course.id == course.course_id%>
-      <h1>Here is your progress status: <%= course.status=="completed" ? "Completed":"In Progress"%></h1>
-      <% if course.status == "inprogress" %>
-        <%= button_to "Mark as Complete", mark_as_course_path , method: :patch , form: {data: {'turbo-confirm': "Are you sure"}}%>
-      <% end %>
-    <% end %>  <% end %>
+  <h1>Here is your progress status: <%= current_subscription(@Course.id).status=="completed" ? "Completed":"In Progress"%></h1>
+  <% if current_subscription(@Course.id).status == "inprogress" %>
+    <%= button_to "Mark as Complete", mark_as_course_path , method: :patch , form: {data: {'turbo-confirm': "Are you sure"}}%>
+  <% end %>
 <% else %>
   <%= button_to "Click Me(Enroll)",enroll_course_path,form: {data: {'turbo-confirm': "Are you sure"}}%>
 <% end %>

@@ -4,9 +4,6 @@ class CoursesController < ApplicationController
   before_action :is_admin, only: %i[new create destroy update edit]
 
   def index
-    # binding.pry
-    # flash[:notice] = "Welciome tmmmm"
-
     @courses = if params[:query].blank?
                  Course.all
                else
@@ -19,13 +16,8 @@ class CoursesController < ApplicationController
   end
 
   def show
-    @number_of_enrolled_count = @course.users.size
+    @number_of_enrolled_count = @course.subscribers.size
     @complete_count = UserCourse.completed_courses(@course.id)
-    # if @complete_count.nil? || @number_of_enrolled_count
-    #   flash.now[:alert] = 'Unable to find details about this course'
-    #   @courses = Course.all
-    #   render :index
-    # end
   end
 
   def enroll
@@ -35,19 +27,15 @@ class CoursesController < ApplicationController
       redirect_to @course
     else
       flash[:danger] = @enrolled.errors.full_messages
-
     end
   end
 
   def create
     @course = current_user.courses.new(course_params)
-
-    @recipent = @course.recipp(current_user)
-    # current_user.created_courses.map { |x| x.users.pluck(:email) }.flatten.uniq
-    # @recipent -= %w[cureent_user.email]
+    @recipent = current_user.recipp
 
     if @course.save
-      UserMailer.send_notification(@recipent, @course).deliver_now
+      # UserMailer.send_notification(@recipent, @course).deliver_now
       redirect_to courses_path, notice: 'Course Created '
     else
       flash[:danger] = @course.errors.full_messages
