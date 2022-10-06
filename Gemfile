@@ -80,6 +80,7 @@ group :test do
 end
 
 gem 'annotate'
+gem 'cancancan'
 gem 'database_cleaner'
 gem 'devise'
 gem 'faker'
