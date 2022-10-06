@@ -9,10 +9,5 @@ module Enrollment
       @user.courses.include?(@course)
     end
 
-    private
-
-    def already_enrolled?
-      AlreadyEnrolled.call(@course, @user)
-    end
   end
 end
