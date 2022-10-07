@@ -86,3 +86,4 @@ gem 'faker'
 gem 'letter_opener', group: :development
 gem 'pry-rails'
 gem 'sidekiq'
+gem 'active_model_serializers', '~> 0.10.2'
