@@ -18,6 +18,10 @@ class CoursesController < ApplicationController
     @regestered = Enrollment::AlreadyEnrolled.call(@course, current_user)
     @number_of_enrolled_count = @course.subscribers.size
     @complete_count = UserCourse.completed_courses(@course.id)
+    respond_to do |format|
+      format.html  # index.html.erb
+      format.json  { render json: @course }
+    end
   end
 
   def enroll

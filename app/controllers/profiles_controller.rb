@@ -3,5 +3,6 @@ class ProfilesController < ApplicationController
   def show
     @courses = Course.all
     @profile = current_user
+    render json: @profile
   end
 end
