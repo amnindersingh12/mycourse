@@ -19,7 +19,7 @@ class CoursesController < ApplicationController
     @number_of_enrolled_count = @course.subscribers.size
     @complete_count = UserCourse.completed_courses(@course.id)
     respond_to do |format|
-      format.html  # index.html.erb
+      format.html
       format.json  { render json: @course }
     end
   end
