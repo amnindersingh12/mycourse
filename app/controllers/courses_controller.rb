@@ -1,8 +1,8 @@
 class CoursesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_course_id, only: %i[show update edit enroll destroy mark_as]
+  before_action :set_course_id, only: %i[show update require_owner edit enroll destroy mark_as]
   before_action :require_admin, only: %i[new create destroy update edit]
-
+  before_action :require_owner, only: %i[update edit]
 
   def index
     @courses = if params[:query].blank?
@@ -73,9 +73,11 @@ class CoursesController < ApplicationController
   private
 
   def require_admin
-    return if current_user.admin? && @course.owner == current_user
+    redirect_to root_path, notice: 'You are not an admin user!' unless current_user.admin?
+  end
 
-    redirect_to root_path, notice: 'You are not an admin user!'
+  def require_owner
+    redirect_to root_path, notice: 'You are not an owner of this course!' if @course.user_id != current_user.id
   end
 
   def set_course_id
