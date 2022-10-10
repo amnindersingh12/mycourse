@@ -1,7 +1,7 @@
 class CoursesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_course_id, only: %i[show update edit enroll destroy mark_as]
-  # before_action :require_admin, only: %i[new create destroy update edit]
+  before_action :require_admin, only: %i[new create destroy update edit]
   load_and_authorize_resource
 
   def index
@@ -22,7 +22,7 @@ class CoursesController < ApplicationController
     @complete_count = UserCourse.completed_courses(@course.id)
     respond_to do |format|
       format.html
-      format.json  { render json: @course }
+      format.json { render json: @course }
     end
   end
 
@@ -72,9 +72,11 @@ class CoursesController < ApplicationController
 
   private
 
-  # def require_admin
-  #   redirect_to root_path, notice: 'You are not an admin user!' unless current_user.admin?
-  # end
+  def require_admin
+    return if current_user.admin? && @course.owner == current_user
+
+    redirect_to root_path, notice: 'You are not an admin user!'
+  end
 
   def set_course_id
     @course = Course.find(params[:id])

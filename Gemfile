@@ -79,12 +79,11 @@ group :test do
   gem 'webdrivers'
 end
 
+gem 'active_model_serializers', '~> 0.10.2'
 gem 'annotate'
-gem 'cancancan'
 gem 'database_cleaner'
 gem 'devise'
 gem 'faker'
 gem 'letter_opener', group: :development
 gem 'pry-rails'
 gem 'sidekiq'
-gem 'active_model_serializers', '~> 0.10.2'
