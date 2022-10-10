@@ -23,10 +23,12 @@ class Course < ApplicationRecord
 
   # users enrolled in the course
   has_many :subscribers, through: :subscriptions, source: :user
+  has_one_attached :cover
 
   validates :name, uniqueness: true
   validates :language, :name, presence: true
-  has_one_attached :cover
+
+  validates :name, last_letter_capital: true
 
   # list the admin of the course
   belongs_to :owner, class_name: 'User', foreign_key: :user_id
