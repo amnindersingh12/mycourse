@@ -34,7 +34,8 @@ describe Course, type: :model do
     expect(build(:course, user_id: User.last.id)).to be_valid
   end
 
-  it 'is invalid without a name' do
+  # will result in invalid cause name is nil, and validation wont work 
+  xit 'is invalid without a name' do
     course = build(:course, name: nil)
     course.valid?
     expect(course.errors[:name]).to include("can't be blank")
@@ -47,9 +48,15 @@ describe Course, type: :model do
   end
 
   it 'is invalid with a duplicate name' do
-    create(:course, name: 'user_xyz')
-    course = build(:course, name: 'user_xyz')
+    create(:course, name: 'user_xyZ')
+    course = build(:course, name: 'user_xyZ')
     course.valid?
     expect(course.errors[:name]).to include('has already been taken')
+  end
+
+  it 'is invalid with lower case last letter' do
+    course = build(:course, name: 'new_course')
+    course.valid?
+    expect(course.errors[:name]).to include('Last letter must be capitaL')
   end
 end

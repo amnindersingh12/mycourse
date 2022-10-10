@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.feature 'User', type: :feature do
+  include_context 'db_cleanup'
+
   given(:present_user) { create(:member_user) }
 
   feature 'Successful Login' do
