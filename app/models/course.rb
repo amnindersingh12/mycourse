@@ -36,7 +36,7 @@ class Course < ApplicationRecord
   end
 
   after_save do
-    CourseNotificationJob.perform_later(Recipient.new(owner).list_of_recipient, Course.last)
+    CourseNotificationJob.perform_later(Recipient.call(owner), Course.last)
   end
 
   scope :filter_course, ->(q) { where(language: q.capitalize) }

@@ -1,7 +1,9 @@
 class CoursesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_course_id, only: %i[show update edit enroll destroy mark_as]
-  before_action :require_admin, only: %i[new create destroy update edit]
+  # before_action :require_admin, only: %i[new create destroy update edit]
+  load_and_authorize_resource
+
   def index
     @courses = if params[:query].blank?
                  Course.all
@@ -66,9 +68,9 @@ class CoursesController < ApplicationController
 
   private
 
-  def require_admin
-    redirect_to root_path, notice: 'You are not an admin user!' unless current_user.admin?
-  end
+  # def require_admin
+  #   redirect_to root_path, notice: 'You are not an admin user!' unless current_user.admin?
+  # end
 
   def set_course_id
     @course = Course.find(params[:id])

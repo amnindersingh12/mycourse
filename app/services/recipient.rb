@@ -8,8 +8,4 @@ class Recipient < ApplicationService
       x.subscribers.pluck(:email)
     end.flatten.uniq - [@owner.email]
   end
-
-  def list_of_recipient
-    Recipient.call(@owner)
-  end
 end
