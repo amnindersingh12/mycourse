@@ -9,9 +9,7 @@
   <%= image_tag 'https://picsum.photos/seed/picsum/200/300' %>
 <% end %>
 <hr>
-<h4>Course Name is <%=@course.name%></h4>
-<h4>Course creator Name is <%= @course.owner.name%></h4>
-<h4>Course language is <%=@course.language%></h4>
+<%= render 'courses/course_detail', course: @course%>
 <hr>
 <br>
 <hr>
@@ -21,11 +19,7 @@
 <hr>
 <br>
 <% if @regestered  %>
-  <h1>Your are now enrolled in this  <%= @course.name%> course</h1>
-  <h1>Here is your progress status: <%=  current_subscription(@course.id).status== "inprogress" ? t('in_progress_status') : t('completed_status') %></h1>
-  <% if current_subscription(@course.id).status == "inprogress" %>
-    <%= button_to "Mark as Complete", mark_as_course_path , method: :patch , form: {data: {'turbo-confirm': "Are you sure"}}%>
-  <% end %>
+  <%= render 'courses/status', course: @course %>
 <% else %>
   <%= button_to "Click Me(Enroll)",enroll_course_path%>
 <% end %>
