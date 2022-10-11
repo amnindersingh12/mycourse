@@ -64,7 +64,6 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem 'web-console'
-
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
 
@@ -84,9 +83,9 @@ gem 'annotate'
 gem 'database_cleaner'
 gem 'devise'
 gem 'faker'
-gem 'letter_opener', group: :development
-gem 'pry-rails'
-gem 'sidekiq'
-gem 'rack-mini-profiler'
 gem 'htmlbeautifier'
+gem 'letter_opener', group: :development
 gem 'memory_profiler'
+gem 'pry-rails'
+gem 'rack-mini-profiler'
+gem 'sidekiq'

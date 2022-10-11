@@ -48,5 +48,4 @@ class Course < ApplicationRecord
   # def cached_subscription
   #   Rails.cache.fetch([self]) { subscriptions.find_by(user_id: current_user)}
   # end
-
 end
