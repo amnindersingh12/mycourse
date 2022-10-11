@@ -40,4 +40,13 @@ class Course < ApplicationRecord
   end
 
   scope :filter_course, ->(q) { where(language: q.capitalize) }
+
+  def cached_subscriber_size
+    Rails.cache.fetch([self]) { subscribers.size }
+  end
+
+  # def cached_subscription
+  #   Rails.cache.fetch([self]) { subscriptions.find_by(user_id: current_user)}
+  # end
+
 end

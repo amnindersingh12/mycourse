@@ -87,3 +87,6 @@ gem 'faker'
 gem 'letter_opener', group: :development
 gem 'pry-rails'
 gem 'sidekiq'
+gem 'rack-mini-profiler'
+gem 'htmlbeautifier'
+gem 'memory_profiler'

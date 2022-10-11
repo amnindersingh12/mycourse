@@ -26,6 +26,11 @@ class UserCourse < ApplicationRecord
   validates :user_id, uniqueness: { scope: :course_id }
 
   enum :status, %i[inprogress completed]
-  scope :completed_courses, ->(q) { where(course_id: q, status: true).size }
+  # scope :completed_courses, ->(q) { where(course_id: q, status: true).size }
+
+  def self.cached_completed_size(id)
+    Rails.cache.fetch([self, id]) { where(course_id: id, status: true).size }
+  end
+
   # SELECT COUNT(*) FROM "user_courses" WHERE "user_courses"."course_id" = q AND "user_courses"."status" = true
 end

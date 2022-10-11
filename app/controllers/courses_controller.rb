@@ -3,13 +3,13 @@ class CoursesController < ApplicationController
   before_action :set_course_id, only: %i[show update require_owner edit enroll destroy mark_as]
   before_action :require_admin, only: %i[new create destroy update edit]
   before_action :require_owner, only: %i[update edit]
-
+  # memoized
   def index
-    @courses = if params[:query].blank?
-                 Course.all
-               else
-                 Course.filter_course(params[:query])
-               end
+    @courses ||= if params[:query].blank?
+                   Course.all
+                 else
+                   Course.filter_course(params[:query])
+                 end
   end
 
   def new
@@ -18,8 +18,9 @@ class CoursesController < ApplicationController
 
   def show
     @regestered = Enrollment::AlreadyEnrolled.call(@course, current_user)
-    @number_of_enrolled_count = @course.subscribers.size
-    @complete_count = UserCourse.completed_courses(@course.id)
+    @number_of_enrolled_count = @course.cached_subscriber_size # subscribers.size
+    # @complete_count =  UserCourse.completed_courses(@course.id)
+    @complete_count = UserCourse.cached_completed_size(@course.id)
     respond_to do |format|
       format.html
       format.json { render json: @course }
@@ -81,7 +82,7 @@ class CoursesController < ApplicationController
   end
 
   def set_course_id
-    @course = Course.find(params[:id])
+    @course ||= Course.find(params[:id])
   end
 
   def course_params
