@@ -8,6 +8,5 @@ module Enrollment
     def call
       @user.courses.include?(@course)
     end
-
   end
 end

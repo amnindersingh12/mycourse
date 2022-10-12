@@ -20,8 +20,7 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :validatable
+  devise :database_authenticatable, :registerable, :recoverable, :validatable
   validates :name, presence: true
 
   #  courses in which user is regestered (join table)
@@ -33,5 +32,8 @@ class User < ApplicationRecord
   # courses created by the user
   has_many :main_courses, class_name: :Course
 
-  enum :role, %i[member admin], default: :member
+  # courses managed by the user
+  has_many :super_courses, class_name: :Course, foreign_key: :superuser_id
+
+  enum :role, %i[member admin superuser], default: :member
 end

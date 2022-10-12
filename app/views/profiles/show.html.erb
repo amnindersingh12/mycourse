@@ -6,12 +6,20 @@
   <hr>
   <p><%= link_to 'Available Courses', courses_path%></p>
   <hr>
-  <%if current_user.admin?%>
+  <%if can? :create, Course %>
     <%= link_to "Add Course", new_course_path %>
     <br>
     <hr>
     <h1>Course Created by You</h1>
     <% @profile.main_courses.each  do |course|%>
+      <p>
+        Name of the course : <%=link_to course.name, course_path(course.id) %>
+      </p>
+    <% end %>
+  <% end %>
+  <% if @profile.admin? || have_superusers(@profile.id)  %>
+    <h1>Courses managed by You</h1>
+    <% @profile.super_courses.each  do |course|%>
       <p>
         Name of the course : <%=link_to course.name, course_path(course.id) %>
       </p>

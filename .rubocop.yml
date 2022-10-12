@@ -8,3 +8,7 @@ Lint/MissingSuper:
 # AllCops:
 #   Exclude:
 #     - "db/**/*"
+AllCops:
+  EnabledByDefault: true
+Style/Copyright:
+  Enabled: true

@@ -1,3 +1,15 @@
+<% if current_user == @course.owner %>
+  <h1>
+    Users enrolled in this course are:
+  </h1>
+  <p>
+    <% @course.subscribers.each do |user| %>
+      <%= user.email  %>
+      <%= user.id  %>
+      <br/>
+    <% end %>
+  </p>
+<% end %>
 <h1>Enter Course Details</h1>
 <br>
 <%= form_with model: @course do |f| %>
@@ -7,6 +19,10 @@
     <%= f.text_field :name ,placeholder: "Enter Your course name"%>
   </div>
   <%= f.hidden_field :user_id, value: current_user.id %>
+  <% if current_user.id == @course.owner.id %>
+    <%= f.label :superuser_id, "SuperUser ID" %>
+    <%= f.text_field :superuser_id, placeholder: "Enter User Id" %>
+  <% end %>
   <div class="mb-3">    <%= f.label :language, "Language" %>
     <%= f.text_field :language, placeholder: "Enter the programming langugae(like js ruby )" %></div>
   <div class="mb-3">

@@ -2,12 +2,13 @@
 #
 # Table name: courses
 #
-#  id         :integer          not null, primary key
-#  language   :string
-#  name       :string
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  user_id    :integer          not null
+#  id           :integer          not null, primary key
+#  language     :string
+#  name         :string
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  superuser_id :integer
+#  user_id      :integer          not null
 #
 # Indexes
 #
@@ -31,11 +32,14 @@ class Course < ApplicationRecord
   # list the admin of the course
   belongs_to :owner, class_name: 'User', foreign_key: :user_id
 
+  # list the superuser of the course
+  belongs_to :superuser, class_name: 'User', foreign_key: :superuser_id
+
   before_save do
     self.language = language.capitalize
   end
 
-  after_save do
+  after_create do
     CourseNotificationJob.perform_later(Recipient.call(owner), Course.last)
   end
 
