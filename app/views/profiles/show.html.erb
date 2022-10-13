@@ -1,58 +1,51 @@
+<div class="modal-body row">
+  <div class="col-md-4">
+    <p> Your email is  <%= @profile.email %></p>
+    <%= button_to "logout", destroy_user_session_path, method: :delete ,data: {confirm:"Are you sure?"} %>
+  </div>
+  <div class="col-md-4">
+    <p><%= link_to 'Edit Profile', edit_user_registration_path%></p>
+  </div>
+  <div class="col-md-4">
+    <p><%= link_to 'Available Courses', courses_path%></p>
+  </div>
+</div>
+<div class="modal-body row">
+  <div class="col-md-6">
+    <% if @profile.admin? || superuser?(@profile.id)  %>
+      <h1>Courses managed by You</h1>
+      <% @profile.super_courses.each  do |course|%>
+        <p> Name of the course : <%=link_to course.name, course_path(course.id) %></p>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="col-md-6">
+    <%if can? :create, Course %>
+      <%= link_to "Link to Add Course", new_course_path %>
+      <h1>Course Created by You</h1>
+      <% @profile.main_courses.each  do |course|%>
+        <p>
+          Name of the course : <%=link_to course.name, course_path(course.id) %>
+        </p>
+      <% end %>
+    <% end %>
+  </div>
+</div>
 <div>
-  <p> Your email is  <%= @profile.email %></p>
-  <%= button_to "logout", destroy_user_session_path, method: :delete  %>
-  <hr>
-  <p><%= link_to 'Edit Profile', edit_user_registration_path%></p>
-  <hr>
-  <p><%= link_to 'Available Courses', courses_path%></p>
-  <hr>
-  <%if can? :create, Course %>
-    <%= link_to "Add Course", new_course_path %>
-    <br>
-    <hr>
-    <h1>Course Created by You</h1>
-    <% @profile.main_courses.each  do |course|%>
-      <p>
-        Name of the course : <%=link_to course.name, course_path(course.id) %>
-      </p>
-    <% end %>
-  <% end %>
-  <% if @profile.admin? || have_superusers(@profile.id)  %>
-    <h1>Courses managed by You</h1>
-    <% @profile.super_courses.each  do |course|%>
-      <p>
-        Name of the course : <%=link_to course.name, course_path(course.id) %>
-      </p>
-    <% end %>
-  <% end %>
-  <hr>
   <br>
   <% if @profile.courses.empty? %>
     <p>You have not enrolled in course yet</p>
   <% else %>
     <h1>Courses,in which you are enrolled :<% @profile.courses.each do |c|%>    </h1>
-      <hr>
       <p>Course Name => <%=link_to  c.name ,course_path(c.id)%></p>
-      <p>  Enrollment date => <%= l current_subscription(c.id).created_at, format: :custom %></p>
+      <p>Enrollment date => <%= l current_subscription(c.id).created_at, format: :custom %></p>
       <%if current_subscription(c.id).status == "completed" %>
-        <p>  Completed date =><%= l current_subscription(c.id).updated_at, format: :custom %></p>
+        <p>Completed date =><%= l current_subscription(c.id).updated_at, format: :custom %></p>
+        <p>Show status =>  Completed </p>
+      <% else %>
+        <p>Show status =>  In Progress </p>
       <% end %>
-      <p>Show status =>   <%=  current_subscription(c.id).status== "inprogress" ? t('in_progress_status') : t('completed_status') %> </p>
       <hr>
     <% end %>
   <% end %>
 </div>
-<%# [#<UserCourse:0x000000010b1d1a08
-  id: 1,
-  user_id: 2,
-  course_id: 1,
-  status: "inprogress",
-  created_at: Wed, 14 Sep 2022 11:03:21.866269000 UTC +00:00,
-  updated_at: Wed, 14 Sep 2022 11:03:21.866269000 UTC +00:00>,
- #<UserCourse:0x000000010b1d1878
-  id: 2,
-  user_id: 2,
-  course_id: 4,
-  status: "inprogress",
-  created_at: Wed, 14 Sep 2022 11:04:16.876393000 UTC +00:00,
-  updated_at: Wed, 14 Sep 2022 11:04:16.876393000 UTC +00:00>] %>

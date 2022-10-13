@@ -89,3 +89,5 @@ gem 'htmlbeautifier'
 gem 'letter_opener', group: :development
 gem 'pry-rails'
 gem 'sidekiq'
+
+gem 'cssbundling-rails', '~> 1.1'

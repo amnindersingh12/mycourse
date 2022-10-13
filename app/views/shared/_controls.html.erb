@@ -1,0 +1,12 @@
+<% if @regestered  %>
+  <h4>Your are now enrolled in this  <%= course.name%> course</h4>
+  <h4>Here is your progress status: <%= render "shared/status", course: course  %></h4>
+<% else %>
+  <%= button_to "Click Me(Enroll)",enroll_course_path%>
+<% end %>
+<% if  course.user_id == current_user.id %>
+  <%= link_to "Edit this course", edit_course_path(course)%>
+  <%= button_to "delete this course", course_path(course), method: :delete ,data: {confirm:"Are you sure?"}%>
+<% elsif current_user.id == course.superuser_id %>
+  <%= link_to "Edit this course", edit_course_path(course)%>
+<% end %>

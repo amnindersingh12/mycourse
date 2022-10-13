@@ -1,24 +1,26 @@
-<p><%= link_to "My profile", profile_path(current_user)%> </p>
-<h1>Welcome to Course</h1>
-<% if current_user %>
-  <p>Hello <%=current_user.email %></p>
-  <%= button_to "logout", destroy_user_session_path, method: :delete  %>
-<%else  %>
-  <p>You are not signed in </p>
-  <p>Please Sign in</p>
-  <%= link_to "Sign in", new_user_session_path %>
-  <%= link_to "Sign up", new_user_registration_path %>
-<%end%>
-<div>
-  <p>
-    Filter courses
-    <%= form_with url: courses_path, method: :get do |form| %>
-      <%= form.text_field :query %>
-      <%= form.submit "Filter" %>
-    <% end %>
-  </p>
+<h1 class="text-center">Welcome to Course</h1>
+<div class="modal-body row">
+  <div class="col-md-10">
+    <% if current_user %>
+      <p>Hello <%=current_user.email %></p>
+      <%= button_to "logout", destroy_user_session_path, method: :delete ,data: {confirm:"Are you sure?"} %>
+    <%else  %>
+      <p>You are not signed in </p>
+      <p>Please Sign in</p>
+      <%= link_to "Sign in", new_user_session_path %>
+      <%= link_to "Sign up", new_user_registration_path %>
+    <%end%>
+    <p><%= link_to "My profile", profile_path(current_user)%> </p>
+  </div>
+  <div class="col-md-2">
+    <p>Filter courses</p>
+      <%= form_with url: courses_path, method: :get do |form| %>
+        <%= form.text_field :query %>
+       <%= form.submit "Filter" %>
+      <% end %>
+  </div>
 </div>
-<div class="mt-5">
+<div >
   <h1>list of all the available course</h1>
   <hr>
   <% @courses.each.with_index(1) do |course,index|%>
