@@ -10,11 +10,13 @@ class Ability
     #   can :read, :all
     #   return unless user.admin?
 
-    can(%i[enroll read read mark_as], :all)
+    can(%i[enroll read mark_as], :all) if user.member?
 
     can(:manage, Course, user_id: user.id) if user.admin?
 
-    can(%i[update], Course, superuser_id: user.id)
+    can(:update, Course, superuser_id: user.id)
+
+    can(%i[read mark_as enroll], Course)
 
     #
     # The first argument to `can` is the action you are giving the user

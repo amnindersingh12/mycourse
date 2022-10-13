@@ -10,4 +10,10 @@ FactoryBot.define do
     password { 'password' }
     role { 'admin' }
   end
+  factory :super_user, class: 'user' do
+    name { "admin_#{Faker::Name.first_name}" }
+    email { "admin_#{Faker::Internet.email}" }
+    password { 'password' }
+    role { 'superuser' }
+  end
 end

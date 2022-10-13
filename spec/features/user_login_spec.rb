@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'User', type: :feature do
+RSpec.feature('User', type: :feature) do
   given(:present_user) { create(:member_user) }
 
   feature 'Successful Login' do
@@ -11,7 +11,7 @@ RSpec.feature 'User', type: :feature do
         fill_in 'Password', with: present_user.password
       end
       click_button 'commit'
-      expect(page).to have_content 'Signed in successfully'
+      expect(page).to(have_content('Signed in successfully'))
     end
   end
 
@@ -23,7 +23,7 @@ RSpec.feature 'User', type: :feature do
         fill_in 'Password', with: present_user.password
       end
       click_button 'commit'
-      expect(page).to have_content 'Invalid Email or password'
+      expect(page).to(have_content('Invalid Email or password'))
     end
     scenario 'Signing in with incorrect password' do
       visit '/auth/login'
@@ -32,7 +32,7 @@ RSpec.feature 'User', type: :feature do
         fill_in 'Password', with: '11111111'
       end
       click_button 'commit'
-      expect(page).to have_content 'Invalid Email or password'
+      expect(page).to(have_content('Invalid Email or password'))
     end
   end
 end

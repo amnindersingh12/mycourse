@@ -1,14 +1,2 @@
-Style/FrozenStringLiteralComment:
-  Enabled: false
-Style/Documentation:
-  Enabled: false
-Lint/MissingSuper:
-  Exclude:
-    - "app/services/**/*"
-# AllCops:
-#   Exclude:
-#     - "db/**/*"
 AllCops:
-  EnabledByDefault: true
-Style/Copyright:
-  Enabled: true
+  NewCops: enable

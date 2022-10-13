@@ -19,7 +19,7 @@
     <%= f.text_field :name ,placeholder: "Enter Your course name"%>
   </div>
   <%= f.hidden_field :user_id, value: current_user.id %>
-  <% if current_user.id == @course.owner.id %>
+  <% if current_user == @course.owner %>
     <%= f.label :superuser_id, "SuperUser ID" %>
     <%= f.text_field :superuser_id, placeholder: "Enter User Id" %>
   <% end %>
