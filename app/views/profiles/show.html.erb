@@ -1,13 +1,12 @@
 <div class="modal-body row">
   <div class="col-md-4">
-    <p> Your email is  <%= @profile.email %></p>
-    <%= button_to "logout", destroy_user_session_path, method: :delete ,data: {confirm:"Are you sure?"} %>
+<%= render "shared/greeting", user: @profile %>
   </div>
   <div class="col-md-4">
     <p><%= link_to 'Edit Profile', edit_user_registration_path%></p>
   </div>
   <div class="col-md-4">
-    <p><%= link_to 'Available Courses', courses_path%></p>
+    <%= render "shared/all_courses" %>
   </div>
 </div>
 <div class="modal-body row">

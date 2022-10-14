@@ -2,8 +2,7 @@
 <div class="modal-body row">
   <div class="col-md-10">
     <% if current_user %>
-      <p>Hello <%=current_user.email %></p>
-      <%= button_to "logout", destroy_user_session_path, method: :delete ,data: {confirm:"Are you sure?"} %>
+      <%= render "shared/greeting" , user: current_user %>
     <%else  %>
       <p>You are not signed in </p>
       <p>Please Sign in</p>

@@ -18,6 +18,10 @@ class Ability
 
     can(%i[read mark_as enroll], Course)
 
+    can(%i[show index], :ProfilesController) if user.admin?
+
+    cannot(%i[index], :ProfilesController)
+
     #
     # The first argument to `can` is the action you are giving the user
     # permission to do.
