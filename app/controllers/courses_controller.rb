@@ -69,10 +69,6 @@ class CoursesController < ApplicationController
 
   private
 
-  def load_course
-    @course = Course.find(params[:id])
-  end
-
   def course_params
     params.require(:course).permit(:language, :user_id, :query, :name, :cover, :superuser_id)
   end

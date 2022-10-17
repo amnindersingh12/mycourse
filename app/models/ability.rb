@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+# frozen_string_literal: true
 
 class Ability
   include CanCan::Ability
@@ -9,30 +10,26 @@ class Ability
     #   return unless user.present?
     #   can :read, :all
     #   return unless user.admin?
+    can :read, Course
+    # return unless user.member?
 
-    can(%i[enroll read read mark_as], :all)
+    # can(%i[enroll read mark_as], :all) if user.member?
+    can(%i[enroll read mark_as], :all)
+    can(:update, Course, superuser_id: user.id)
+    can(%i[read], :ProfilesController)
+    cannot(%i[index], :ProfilesController)
+    if user.superuser?
 
-    can(:manage, Course, user_id: user.id) if user.admin?
+      can(%i[enroll read mark_as], :all)
+      can(:update, Course, superuser_id: user.id)
+      can(%i[read], :ProfilesController)
+      cannot(%i[index], :ProfilesController)
 
-    can(%i[update], Course, superuser_id: user.id)
+    elsif user.admin?
+      can(:manage, Course, user_id: user.id)
 
-    #
-    # The first argument to `can` is the action you are giving the user
-    # permission to do.
-    # If you pass :manage it will apply to every action. Other common actions
-    # here are :read, :create, :update and :destroy.
-    #
-    # The second argument is the resource the user can perform the action on.
-    # If you pass :all it will apply to every resource. Otherwise pass a Ruby
-    # class of the resource.
-    #
-    # The third argument is an optional hash of conditions to further filter the
-    # objects.
-    # For example, here the user can only update published articles.
-    #
-    #   can :update, Article, published: true
-    #
-    # See the wiki for details:
-    # https://github.com/CanCanCommunity/cancancan/blob/develop/docs/define_check_abilities.md
+      can(:manage, :ProfilesController)
+
+    end
   end
 end

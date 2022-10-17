@@ -1,32 +1,15 @@
-<% if current_user == @course.owner %>
-  <h1>
-    Users enrolled in this course are:
-  </h1>
-  <p>
-    <% @course.subscribers.each do |user| %>
-      <%= user.email  %>
-      <%= user.id  %>
-      <br/>
-    <% end %>
-  </p>
-<% end %>
 <h1>Enter Course Details</h1>
 <br>
-<%= form_with model: @course do |f| %>
+<%= form_with  model: @course, url: { action: "create",controller: "courses" },method: :post do |f| %>
+  <%= render "devise/shared/error_messages", resource:@course%>
   <div class="card">
     <div class="card-body">
       <div class="mb-3">
-        <%= render "devise/shared/error_messages", resource:@course%>
         <%= f.label :name, "Course name" %>
         <%= f.text_field :name ,placeholder: "Enter Your course name",  class: "form-control"%>
       </div>
       <%= f.hidden_field :user_id, value: current_user.id %>
-      <% if current_user == @course.owner %>
-        <div class="mb-3">
-          <%= f.label :superuser_id, "SuperUser ID" %>
-          <%= f.text_field :superuser_id, placeholder: "Enter User Id",  class: "form-control" %>
-        </div>
-      <% end %>
+      <%= f.hidden_field :superuser_id, value: current_user.id %>
       <div class="mb-3">
         <%= f.label :language, "Language" %>
         <%= f.text_field :language, placeholder: "Enter the programming langugae(like js ruby )",  class: "form-control"%>

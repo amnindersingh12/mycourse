@@ -85,8 +85,9 @@ gem 'cancancan'
 gem 'database_cleaner'
 gem 'devise'
 gem 'faker'
+gem 'htmlbeautifier'
 gem 'letter_opener', group: :development
 gem 'pry-rails'
 gem 'sidekiq'
-gem 'htmlbeautifier'
 
+gem 'cssbundling-rails', '~> 1.1'
