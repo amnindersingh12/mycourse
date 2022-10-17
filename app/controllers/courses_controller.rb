@@ -1,20 +1,17 @@
 class CoursesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_course_id, only: %i[show update require_owner edit enroll destroy mark_as]
-  before_action :require_admin, only: %i[new create destroy update edit]
-  before_action :require_owner, only: %i[update edit]
+  load_and_authorize_resource
 
   def index
-    @courses = if params[:query].blank?
-                 Course.all
-               else
-                 Course.filter_course(params[:query])
-               end
+    @courses =
+      if params[:query].blank?
+        Course.all
+      else
+        Course.filter_course(params[:query])
+      end
   end
 
-  def new
-    @course = Course.new
-  end
+  def new; end
 
   def show
     @regestered = Enrollment::AlreadyEnrolled.call(@course, current_user)
@@ -22,34 +19,34 @@ class CoursesController < ApplicationController
     @complete_count = UserCourse.completed_courses(@course.id)
     respond_to do |format|
       format.html
-      format.json { render json: @course }
+      format.json { render(json: @course) }
     end
   end
 
   def enroll
     @enrolled = Enrollment::EnrollIn.call(@course, current_user)
-    flash[:notice] = if @enrolled.save
-                       'Enrolled Successfully'
-                     else
-                       'Something went wrong!'
-                     end
-    redirect_to @course
+    flash[:notice] =
+      if @enrolled.save
+        'Enrolled Successfully'
+      else
+        'Something went wrong!'
+      end
+    redirect_to(@course)
   end
 
   def create
     @recipent = Recipient.call(current_user)
-    @course = current_user.courses.new(course_params)
     if @course.save
-      redirect_to @course
+      redirect_to(@course)
     else
       flash[:danger] = 'Something Went Wrong!'
-      render :new, status: :unprocessable_entity
+      render(:new, status: :unprocessable_entity)
     end
   end
 
   def destroy
     @course.destroy
-    redirect_to root_path
+    redirect_to(root_path)
   end
 
   def edit; end
@@ -57,34 +54,26 @@ class CoursesController < ApplicationController
   def update
     @updated = @course.update(course_params)
     if @updated
-      redirect_to @course
+      redirect_to(@course)
     else
       flash[:danger] = 'Something Went Wrong!'
-      render :edit, status: :unprocessable_entity
+      render(:edit, status: :unprocessable_entity)
     end
   end
 
   def mark_as
     flash[:notice] = 'Marked as Completed'
     Enrollment::MarkAsComplete.call(@course, current_user)
-    redirect_to @course
+    redirect_to(@course)
   end
 
   private
 
-  def require_admin
-    redirect_to root_path, notice: 'You are not an admin user!' unless current_user.admin?
-  end
-
-  def require_owner
-    redirect_to root_path, notice: 'You are not an owner of this course!' if @course.user_id != current_user.id
-  end
-
-  def set_course_id
+  def load_course
     @course = Course.find(params[:id])
   end
 
   def course_params
-    params.require(:course).permit(:language, :user_id, :query, :name, :cover)
+    params.require(:course).permit(:language, :user_id, :query, :name, :cover, :superuser_id)
   end
 end

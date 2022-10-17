@@ -1,0 +1,4 @@
+<%=  current_subscription(course.id).status== "inprogress" ? t('in_progress_status') : t('completed_status') %>
+<% if current_subscription(course.id).status == "inprogress" %>
+  <%= button_to "Mark as Complete", mark_as_course_path , method: :patch %>
+<% end %>

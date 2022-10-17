@@ -1,7 +1,14 @@
 Rails.application.routes.draw do
   # devise_for :users
-  devise_for :users, path: 'auth',
-                     path_names: { sign_in: 'login', sign_out: 'logout', password: 'secret', confirmation: 'verification', registration: 'register' }
+  devise_for :users,
+             path: 'auth',
+             path_names: {
+               sign_in: 'login',
+               sign_out: 'logout',
+               password: 'secret',
+               confirmation: 'verification',
+               registration: 'register'
+             }
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.htmlA
 
   # resources :products do
