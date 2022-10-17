@@ -1,0 +1,19 @@
+<br>
+<div class="modal-body row">
+  <div class="col-md-6">
+    <h1>List of Reviews! </h1>
+    <br>
+    <% if @course.reviews.exists? %>
+      <% @course.reviews.each do |review| %>
+        <hr>
+        User Name: <%= User.find(review.user_id).name %>
+        <br>
+        Review: <%=  review.body  %>
+      <% end %>
+    <% else %>
+      <p>No review yet...</p>
+    <% end %>
+  </div>
+  <div class="col-md-6">
+    <%= render "shared/review_form", course: @course %>
+  </div>

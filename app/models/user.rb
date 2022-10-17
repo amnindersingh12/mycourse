@@ -35,5 +35,8 @@ class User < ApplicationRecord
   # courses managed by the user
   has_many :super_courses, class_name: :Course, foreign_key: :superuser_id
 
+  # reviews posted by user
+  has_many :reviews, dependent: :destroy
+
   enum :role, %i[member admin superuser], default: :member
 end

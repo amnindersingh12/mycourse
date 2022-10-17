@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   # end
   # namespace :admin do
   resources :courses do
+    resource :reviews
     member do
       post :enroll
       patch :mark_as

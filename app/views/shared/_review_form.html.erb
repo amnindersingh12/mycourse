@@ -1,0 +1,7 @@
+<%= form_with  model: @review, url: { action: "create",controller: "reviews" },method: :post do |f| %>
+  <%= f.hidden_field :course_id, value: @course.id %>
+  <%= f.hidden_field :user_id, value: current_user.id %>
+  <%= f.label :body %><br>
+  <%= f.text_area :body %><br>
+  <%= f.submit %>
+<% end %>

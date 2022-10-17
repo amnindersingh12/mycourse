@@ -19,5 +19,9 @@
     <h3>Course is maintined by:</h3>
     <p><%=@course.superuser.email %></p>
     <%= render 'shared/controls', course: @course  %>
+<br/>
+ <%= link_to "Load Reviews", course_reviews_path(@course.id) %>
+
   </div>
+
 </div>
