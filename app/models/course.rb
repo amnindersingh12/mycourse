@@ -43,5 +43,8 @@ class Course < ApplicationRecord
     CourseNotificationJob.perform_later(Recipient.call(owner), Course.last)
   end
 
+  def self.superuser?(id)
+    Course.all.pluck(:superuser_id).uniq.include?(id)
+  end
   scope :filter_course, ->(q) { where(language: q.capitalize) }
 end
