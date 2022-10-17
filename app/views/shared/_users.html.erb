@@ -1,0 +1,12 @@
+<tr>
+  <td> <%=users.id%> </td>
+  <td> <%=users.name%> </td>
+  <td> <%=users.email%> </td>
+  <td><%= users.role%> </td>
+  <%# <%= form_for(users, as: :user, url: registration_path(users), html: { method: :patch }) do |f| %>
+    <%# <%= render "devise/shared/error_messages", resource: users %>
+    <%# <%= f.hidden_field :password, value: params[:event_id] %>
+    <%# <%= f.select :role,options_for_select(User.roles.map { |key, value| [key.humanize, key] }, selected: users.role),class: "form-control"%>
+    <%# <%= f.submit  %>
+    <%# <% end %>
+  </tr>
