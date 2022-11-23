@@ -25,8 +25,9 @@ class Course < ApplicationRecord
   # users enrolled in the course
   has_many :subscribers, through: :subscriptions, source: :user
 
-  validates :name, uniqueness: true
-  validates :language, :name, presence: true
+  # validates :name, uniqueness: true
+  validates :language, presence: true
+  validates_presence_of :name, if: proc { |course| course.superuser_id == 1 }
   has_one_attached :cover
 
   # list the admin of the course
