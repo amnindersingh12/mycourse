@@ -23,6 +23,26 @@ require 'rails_helper'
 describe Course, type: :model do
   include_context 'db_cleanup'
 
+  describe 'validation' do
+    context 'if not admin' do
+      let(:c1) { Course.new(language: 'js', name: 'course1', user_id: 3, superuser_id: 3) }
+
+      before do
+        allow(c1).to receive(:is_admin?).and_return(false)
+      end
+      it { expect(c1).to validate_presence_of(:name) }
+    end
+
+    context 'if admin' do
+      let(:c2) { Course.new(language: 'js', name: nil, user_id: 1, superuser_id: 1) }
+
+      before do
+        allow(c2).to receive(:is_admin?).and_return(true)
+      end
+      it { expect(c2).to validate_presence_of(:name) }
+    end
+  end
+
   before { create(:admin_user) }
 
   it 'is invalid without a owner' do
@@ -41,7 +61,7 @@ describe Course, type: :model do
     expect(course.errors[:name]).to(include("can't be blank"))
   end
 
-  it 'is invalid without a language' do
+  xit 'is invalid without a language' do
     course = build(:course, language: nil)
     course.valid?
     expect(course.errors[:language]).to(include("can't be blank"))
