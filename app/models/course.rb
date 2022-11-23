@@ -26,7 +26,7 @@ class Course < ApplicationRecord
   has_many :subscribers, through: :subscriptions, source: :user
 
   validates :name, presence: true, uniqueness: true
-  validates :language, presence: true, unless: proc { |course| is_admin? course.user_id }
+  validates :language, presence: true, unless: :is_admin?
   has_one_attached :cover
 
   # list the admin of the course
@@ -35,7 +35,7 @@ class Course < ApplicationRecord
   # list the superuser of the course
   belongs_to :superuser, class_name: 'User', foreign_key: :superuser_id
 
-  before_save :capi, unless: proc { |course| is_admin? course.user_id }
+  before_save :capi, unless: :is_admin?  
 
   def capi
     self.language = language.capitalize
@@ -45,8 +45,8 @@ class Course < ApplicationRecord
     CourseNotificationJob.perform_later(Recipient.call(owner), Course.last)
   end
 
-  def is_admin?(id)
-    User.find(id).role == "admin"
+  def is_admin?
+    User.last.role == "admin"
   end
 
   def self.superuser?(id)
