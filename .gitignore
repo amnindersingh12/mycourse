@@ -53,9 +53,6 @@ bower.json
 # Ignore node_modules
 node_modules/
 
-# Ignore lock files
-*.lock
-
 # Ignore precompiled javascript packs
 /public/packs
 /public/packs-test
